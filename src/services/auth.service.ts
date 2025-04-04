@@ -1,37 +1,56 @@
-import { auth, db } from "../config/firebase";
-import { UserRecord } from "firebase-admin/auth";
+import { auth, db, adminInstance } from '../config/firebase'; // Updated import
+import { UserRecord } from 'firebase-admin/auth';
 
-// Register a new user with role
+// Type definitions
+interface UserData {
+  email: string;
+  role: string;
+  institutionId?: string | null;
+  createdAt: FirebaseFirestore.Timestamp | FirebaseFirestore.FieldValue;
+}
+
 export const registerUser = async (
   email: string,
   password: string,
   role: string,
   institutionId?: string
-) => {
-  const user = await auth.createUser({ email, password });
-  
-  // Set custom claims (roles)
-  await auth.setCustomUserClaims(user.uid, { 
-    role,
-    institutionId: institutionId || null 
-  });
+): Promise<{ uid: string; email: string; role: string }> => {
+  try {
+    // 1. Create user in Firebase Auth
+    const user = await auth.createUser({ email, password });
+    
+    // 2. Set custom claims (roles)
+    await auth.setCustomUserClaims(user.uid, { 
+      role,
+      institutionId: institutionId || null 
+    });
 
-  // Save user to Firestore
-  await db.collection("users").doc(user.uid).set({
-    email,
-    role,
-    institutionId,
-    createdAt: new Date()
-  });
+    // 3. Save user to Firestore
+    const userData: UserData = {
+      email,
+      role,
+      institutionId: institutionId || null,
+      createdAt: adminInstance.firestore.FieldValue.serverTimestamp() // Using exported adminInstance
+    };
 
-  return { uid: user.uid, email, role };
+    await db.collection('users').doc(user.uid).set(userData);
+
+    return { uid: user.uid, email, role };
+  } catch (error) {
+    throw new Error(`Registration failed: ${(error as Error).message}`);
+  }
 };
 
-// Login user (JWT will be generated client-side)
-export const loginUser = async (email: string) => {
-  const user = await auth.getUserByEmail(email);
-  return { 
-    uid: user.uid,
-    customClaims: user.customClaims 
-  };
+export const loginUser = async (
+  email: string
+): Promise<{ uid: string; role?: string }> => {
+  try {
+    const user: UserRecord = await auth.getUserByEmail(email);
+    return { 
+      uid: user.uid,
+      role: user.customClaims?.role as string | undefined 
+    };
+  } catch (error) {
+    throw new Error(`Login failed: ${(error as Error).message}`);
+  }
 };
