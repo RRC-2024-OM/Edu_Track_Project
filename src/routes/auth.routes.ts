@@ -57,7 +57,7 @@ router.post(
     body('password').isLength({ min: 8 }),
     body('role').isIn(['super_admin', 'admin', 'teacher', 'student', 'parent'])
   ],
-  authController.register
+  (req, res, next) => authController.register(req, res, next)
 );
 
 /**
@@ -89,7 +89,7 @@ router.post(
  *       500:
  *         description: Server error
  */
-router.post('/login', authController.login);
+router.post('/login', (req, res, next) => authController.login(req, res, next));
 
 /**
  * @swagger
@@ -105,6 +105,6 @@ router.post('/login', authController.login);
  *       401:
  *         description: Unauthorized
  */
-router.post('/logout', authMiddleware, authController.logout);
+router.post('/logout', authMiddleware, (req, res, next) => authController.logout(req, res, next));
 
 export default router;

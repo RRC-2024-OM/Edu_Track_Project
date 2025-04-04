@@ -11,7 +11,7 @@ interface RegisterBody {
 
 interface LoginBody {
   email: string;
-  password: string; // Added password to match typical login flow
+  password: string; 
 }
 
 class AuthController {
