@@ -1,8 +1,6 @@
-import { Router, Request, Response, NextFunction } from 'express';
-import { body, validationResult } from 'express-validator';
+import { Request, Response, NextFunction } from 'express';
+import { validationResult } from 'express-validator';
 import { registerUser, loginUser } from '../services/auth.service';
-
-const router = Router();
 
 interface RegisterBody {
   email: string;
@@ -13,57 +11,60 @@ interface RegisterBody {
 
 interface LoginBody {
   email: string;
+  password: string; 
 }
 
-// Properly typed register endpoint
-router.post(
-  '/register',
-  [
-    body('email').isEmail(),
-    body('password').isLength({ min: 8 }),
-    body('role').isIn(['super_admin', 'admin', 'teacher', 'student', 'parent'])
-  ],
-  (
+class AuthController {
+  /**
+   * Register a new user
+   */
+  async register(
     req: Request<{}, {}, RegisterBody>,
     res: Response,
     next: NextFunction
-  ) => {
-    (async () => {
-      try {
-        const errors = validationResult(req);
-        if (!errors.isEmpty()) {
-          return res.status(400).json({ errors: errors.array() });
-        }
-
-        const user = await registerUser(
-          req.body.email,
-          req.body.password,
-          req.body.role,
-          req.body.institutionId
-        );
-        res.status(201).json(user);
-      } catch (error) {
-        next(error);
+  ) {
+    try {
+      const errors = validationResult(req);
+      if (!errors.isEmpty()) {
+        return res.status(400).json({ errors: errors.array() });
       }
-    })().catch(next);
-  }
-);
 
-// Properly typed login endpoint
-router.post(
-  '/login',
-  async (
+      const { email, password, role, institutionId } = req.body;
+      const user = await registerUser(email, password, role, institutionId);
+      res.status(201).json(user);
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  /**
+   * Login an existing user
+   */
+  async login(
     req: Request<{}, {}, LoginBody>,
     res: Response,
     next: NextFunction
-  ) => {
+  ) {
     try {
-      const user = await loginUser(req.body.email);
+      const { email } = req.body;
+      const user = await loginUser(email);
       res.json(user);
     } catch (error) {
       next(error);
     }
   }
-);
 
-export default router;
+  /**
+   * Logout user (to be implemented)
+   */
+  async logout(req: Request, res: Response, next: NextFunction) {
+    try {
+      // TODO: Implement token invalidation logic
+      res.json({ message: 'Logout successful' });
+    } catch (error) {
+      next(error);
+    }
+  }
+}
+
+export default AuthController;

@@ -1,8 +1,9 @@
 import express from 'express';
 import cors from 'cors';
-import authRoutes from './controllers/auth.controller';
+import authRoutes from './routes/auth.routes'; 
 import { PORT } from './config/env';
 
+// Create Express application
 const app = express();
 
 // Middleware
@@ -37,6 +38,12 @@ app.use((err: any, req: any, res: any, next: any) => {
   res.status(500).json({ error: 'Internal Server Error' });
 });
 
-app.listen(PORT, () => {
-  console.log(`Server running on http://localhost:${PORT}`);
-});
+// Export the Express application
+export default app;
+
+// Server initialization (only when not imported)
+if (require.main === module) {
+  app.listen(PORT, () => {
+    console.log(`Server running on http://localhost:${PORT}`);
+  });
+}
