@@ -1,5 +1,6 @@
 import admin from 'firebase-admin';
 import { db } from '../config/firebase';
+import { ROLES } from '../config/constants';
 
 interface RegisterUserInput {
   email: string;
@@ -10,6 +11,10 @@ interface RegisterUserInput {
 
 export class AuthService {
   async registerUser({ email, password, role, institutionId }: RegisterUserInput) {
+    if (!Object.values(ROLES).includes(role)) {
+      throw new Error(`Invalid role. Accepted roles: ${Object.values(ROLES).join(', ')}`);
+    }
+
     const userRecord = await admin.auth().createUser({ email, password });
 
     await admin.auth().setCustomUserClaims(userRecord.uid, { role });
@@ -28,10 +33,7 @@ export class AuthService {
   }
 
   async loginUser(email: string, password: string) {
-    // Firebase Admin SDK can't verify password directly
     const userRecord = await admin.auth().getUserByEmail(email);
-
-    // Assume password is validated by client using Firebase Auth SDK
     const customToken = await admin.auth().createCustomToken(userRecord.uid);
 
     return {
