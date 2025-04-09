@@ -53,7 +53,7 @@ const authController = new AuthController();
 router.post(
   '/register',
   AuthMiddleware.verifyToken,
-  AuthMiddleware.requireRole('SUPER_ADMIN'),
+  AuthMiddleware.requireRole('SuperAdmin'),
   async (req, res) => {
     try {
       await authController.register(req, res);
