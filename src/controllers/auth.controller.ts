@@ -114,4 +114,57 @@ export class AuthController {
       return res.status(401).json({ error: 'Invalid credentials or user not found.' });
     }
   }
+    /**
+   * @swagger
+   * /auth/set-claims:
+   *   post:
+   *     summary: Modify user role and institutionId (Super Admin only)
+   *     tags: [Auth]
+   *     security:
+   *       - bearerAuth: []
+   *     requestBody:
+   *       required: true
+   *       content:
+   *         application/json:
+   *           schema:
+   *             type: object
+   *             required:
+   *               - uid
+   *               - role
+   *             properties:
+   *               uid:
+   *                 type: string
+   *               role:
+   *                 type: string
+   *                 enum: [SUPER_ADMIN, INSTITUTION_ADMIN, TEACHER, STUDENT, PARENT]
+   *               institutionId:
+   *                 type: string
+   *     responses:
+   *       200:
+   *         description: Claims updated successfully
+   *       400:
+   *         description: Missing or invalid data
+   *       403:
+   *         description: Forbidden
+   *       500:
+   *         description: Server error
+   */
+    async setClaims(req: Request, res: Response): Promise<Response> {
+      const { uid, role, institutionId } = req.body;
+  
+      if (!uid || !role) {
+        return res.status(400).json({ error: 'UID and role are required.' });
+      }
+  
+      if (!Object.values(ROLES).includes(role)) {
+        return res.status(400).json({ error: `Invalid role. Accepted roles: ${Object.values(ROLES).join(', ')}` });
+      }
+  
+      try {
+        const result = await authService.setCustomClaims(uid, role, institutionId);
+        return res.status(200).json({ message: 'Claims updated successfully', result });
+      } catch (error) {
+        return res.status(500).json({ error: 'Failed to update claims.', details: error });
+      }
+    }
 }
