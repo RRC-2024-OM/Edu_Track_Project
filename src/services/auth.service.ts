@@ -43,4 +43,13 @@ export class AuthService {
       role: userRecord.customClaims?.role || null,
     };
   }
+
+  async setCustomClaims(uid: string, role: string, institutionId?: string) {
+    if (!Object.values(ROLES).includes(role)) {
+      throw new Error(`Invalid role. Accepted roles: ${Object.values(ROLES).join(', ')}`);
+    }
+
+    await admin.auth().setCustomUserClaims(uid, { role, institutionId });
+    return { uid, role, institutionId };
+  }
 }
