@@ -114,4 +114,53 @@ router.post('/login', async (req, res) => {
   }
 });
 
+/**
+ * @swagger
+ * /auth/set-claims:
+ *   post:
+ *     summary: Modify user role and institutionId (Super Admin only)
+ *     tags: [Auth]
+ *     security:
+ *       - bearerAuth: []
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - uid
+ *               - role
+ *             properties:
+ *               uid:
+ *                 type: string
+ *               role:
+ *                 type: string
+ *                 enum: [SUPER_ADMIN, INSTITUTION_ADMIN, TEACHER, STUDENT, PARENT]
+ *               institutionId:
+ *                 type: string
+ *     responses:
+ *       200:
+ *         description: Claims updated successfully
+ *       400:
+ *         description: Missing or invalid data
+ *       403:
+ *         description: Forbidden
+ *       500:
+ *         description: Server error
+ */
+router.post(
+  '/set-claims',
+  AuthMiddleware.verifyToken,
+  AuthMiddleware.requireRole('SuperAdmin'),
+  async (req, res) => {
+    try {
+      await authController.setClaims(req, res);
+    } catch (error) {
+      const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+      res.status(500).json({ message: 'Server error', error: errorMessage });
+    }
+  }
+);
+
 export default router;
