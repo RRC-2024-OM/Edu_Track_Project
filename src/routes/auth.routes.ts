@@ -1,5 +1,6 @@
 import express from 'express';
 import { AuthController } from '../controllers/auth.controller';
+import { AuthMiddleware } from '../middleware/auth.middleware';
 
 const router = express.Router();
 const authController = new AuthController();
@@ -17,6 +18,8 @@ const authController = new AuthController();
  *   post:
  *     summary: Register a new user
  *     tags: [Auth]
+ *     security:
+ *       - bearerAuth: []
  *     requestBody:
  *       required: true
  *       content:
@@ -42,17 +45,24 @@ const authController = new AuthController();
  *         description: User registered successfully
  *       400:
  *         description: Missing fields
+ *       403:
+ *         description: Forbidden
  *       500:
  *         description: Server error
  */
-router.post('/register', async (req, res) => {
-	try {
-		await authController.register(req, res);
-	} catch (error) {
-		const errorMessage = error instanceof Error ? error.message : 'Unknown error';
-		res.status(500).json({ message: 'Server error', error: errorMessage });
-	}
-});
+router.post(
+  '/register',
+  AuthMiddleware.verifyToken,
+  AuthMiddleware.requireRole('SUPER_ADMIN'),
+  async (req, res) => {
+    try {
+      await authController.register(req, res);
+    } catch (error) {
+      const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+      res.status(500).json({ message: 'Server error', error: errorMessage });
+    }
+  }
+);
 
 /**
  * @swagger
@@ -96,12 +106,12 @@ router.post('/register', async (req, res) => {
  *         description: Invalid credentials
  */
 router.post('/login', async (req, res) => {
-	try {
-		await authController.login(req, res);
-	} catch (error) {
-		const errorMessage = error instanceof Error ? error.message : 'Unknown error';
-		res.status(500).json({ message: 'Server error', error: errorMessage });
-	}
+  try {
+    await authController.login(req, res);
+  } catch (error) {
+    const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+    res.status(500).json({ message: 'Server error', error: errorMessage });
+  }
 });
 
 export default router;
