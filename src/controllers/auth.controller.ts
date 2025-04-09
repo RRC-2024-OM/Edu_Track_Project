@@ -1,6 +1,6 @@
-// File: src/controllers/auth.controller.ts
 import { Request, Response } from 'express';
 import { AuthService } from '../services/auth.service';
+import { ROLES } from '../config/constants';
 
 const authService = new AuthService();
 
@@ -29,13 +29,14 @@ export class AuthController {
    *                 type: string
    *               role:
    *                 type: string
+   *                 enum: [SUPER_ADMIN, INSTITUTION_ADMIN, TEACHER, STUDENT, PARENT]
    *               institutionId:
    *                 type: string
    *     responses:
    *       201:
    *         description: User registered successfully
    *       400:
-   *         description: Missing required fields
+   *         description: Missing required fields or invalid role
    *       500:
    *         description: Registration failed
    */
@@ -44,6 +45,10 @@ export class AuthController {
 
     if (!email || !password || !role || !institutionId) {
       return res.status(400).json({ error: 'Missing required fields.' });
+    }
+
+    if (!Object.values(ROLES).includes(role)) {
+      return res.status(400).json({ error: `Invalid role. Accepted roles: ${Object.values(ROLES).join(', ')}` });
     }
 
     try {
