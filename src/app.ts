@@ -2,6 +2,8 @@ import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
 import authRoutes from './routes/auth.routes';
+import userRoutes from './routes/user.routes';
+import courseRoutes from './routes/course.routes';
 import { setupSwagger } from './config/swagger'; 
 
 
@@ -16,7 +18,9 @@ app.use(express.json());
 setupSwagger(app);
 
 // Routes
-app.use('/api/auth', authRoutes);
+app.use('/auth', authRoutes);
+app.use('/users', userRoutes);
+app.use('/courses', courseRoutes);
 
 
 app.listen(PORT, () => {
