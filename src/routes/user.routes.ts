@@ -45,7 +45,7 @@ router.get(
   '/',
   AuthMiddleware.verifyToken,
   AuthMiddleware.requireRole('InstitutionAdmin', 'SuperAdmin'),
-  (req, res) => userController.getAllUsers(req, res)
+  (req: express.Request, res: express.Response) => userController.getAllUsers(req, res)
 );
 
 /**
