@@ -40,4 +40,18 @@ describe('Auth Integration', () => {
     expect(response.body).toHaveProperty('uid', 'mock-uid');
   });
   
+  it('should set claims when authenticated as SuperAdmin', async () => {
+    const response = await request(app)
+      .post('/auth/set-claims')
+      .set('Authorization', 'Bearer mock-valid-token')
+      .send({
+        uid: 'user123',
+        role: 'Teacher',
+        institutionId: 'demo-school',
+      });
+  
+    expect(response.statusCode).toBe(200);
+    expect(response.body.message).toMatch(/Claims updated/i);
+  });
+  
 });
