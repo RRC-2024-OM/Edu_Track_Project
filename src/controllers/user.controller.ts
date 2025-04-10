@@ -117,20 +117,20 @@ export class UserController {
    *         description: Server error
    */
   async createUser(req: Request, res: Response): Promise<void> {
-    const { email, role, institutionId, name } = req.body;
-
-    if (!email || !role) {
-      res.status(400).json({ error: 'Missing required fields (email, role)' });
+    const { email, password, role, institutionId, name } = req.body;
+  
+    if (!email || !password || !role) {
+      res.status(400).json({ error: 'Missing required fields (email, password, role)' });
       return;
     }
-
+  
     if (!Object.values(ROLES).includes(role)) {
       res.status(400).json({ error: `Invalid role. Accepted roles: ${Object.values(ROLES).join(', ')}` });
       return;
     }
-
+  
     try {
-      const user = await userService.createUser({ email, role, institutionId, name });
+      const user = await userService.createUser({ email, password, role, institutionId, name });
       res.status(201).json(user);
     } catch (error) {
       res.status(500).json({ error: 'Failed to create user', details: error });
