@@ -7,7 +7,8 @@
     "start": "node dist/app.js",
     "build": "tsc",
     "lint": "eslint 'src/**/*.{js,ts}'",
-    "test": "jest"
+    "test": "jest",
+    "test:integration": "jest test/integration"
   },
   "keywords": [],
   "author": "",
@@ -21,6 +22,7 @@
     "express-validator": "^7.2.1",
     "firebase-admin": "^13.2.0",
     "joi": "^17.13.3",
+    "multer": "^1.4.5-lts.2",
     "swagger-jsdoc": "^6.2.8",
     "swagger-ui-express": "^5.0.1",
     "yamljs": "^0.3.0"
