@@ -69,7 +69,7 @@ export class UserController {
     const userId = req.params.id;
     const requester = (req as any).user;
 
-    if (requester.uid !== userId && !['SUPER_ADMIN', 'INSTITUTION_ADMIN'].includes(requester.role)) {
+    if (requester.uid !== userId && !['InstitutionAdmin', 'SuperAdmin'].includes(requester.role)) {
       res.status(403).json({ message: 'Access denied' });
       return;
     }
@@ -174,7 +174,7 @@ export class UserController {
     const userId = req.params.id;
     const requester = (req as any).user;
 
-    if (requester.uid !== userId && !['SUPER_ADMIN', 'INSTITUTION_ADMIN'].includes(requester.role)) {
+    if (requester.uid !== userId && !['InstitutionAdmin', 'SuperAdmin'].includes(requester.role)) {
       res.status(403).json({ message: 'Access denied' });
       return;
     }
@@ -213,8 +213,8 @@ export class UserController {
     const requester = (req as any).user;
     const userId = req.params.id;
 
-    if (requester.role !== 'SUPER_ADMIN') {
-      res.status(403).json({ message: 'Only SUPER_ADMIN can delete users.' });
+    if (requester.role !== 'SuperAdmin') {
+      res.status(403).json({ message: 'Only SuperAdmin can delete users.' });
       return;
     }
 
