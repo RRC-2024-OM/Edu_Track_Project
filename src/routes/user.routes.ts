@@ -44,7 +44,7 @@ const userController = new UserController();
 router.get(
   '/',
   AuthMiddleware.verifyToken,
-  AuthMiddleware.requireRole('SUPER_ADMIN', 'INSTITUTION_ADMIN'),
+  AuthMiddleware.requireRole('InstitutionAdmin', 'SuperAdmin'),
   (req, res) => userController.getAllUsers(req, res)
 );
 
@@ -113,7 +113,7 @@ router.get(
 router.post(
   '/',
   AuthMiddleware.verifyToken,
-  AuthMiddleware.requireRole('SUPER_ADMIN', 'INSTITUTION_ADMIN'),
+  AuthMiddleware.requireRole('InstitutionAdmin', 'SuperAdmin'),
   (req, res) => userController.createUser(req, res)
 );
 
@@ -181,7 +181,7 @@ router.put(
 router.delete(
   '/:id',
   AuthMiddleware.verifyToken,
-  AuthMiddleware.requireRole('SUPER_ADMIN'),
+  AuthMiddleware.requireRole('SuperAdmin'),
   (req, res) => userController.deleteUser(req, res)
 );
 
@@ -214,7 +214,7 @@ router.delete(
 router.post(
   '/bulk',
   AuthMiddleware.verifyToken,
-  AuthMiddleware.requireRole('INSTITUTION_ADMIN', 'SUPER_ADMIN'),
+  AuthMiddleware.requireRole('InstitutionAdmin', 'SuperAdmin'),
   upload.single('file'),
   (req, res) => userController.importUsers(req, res)
 );
