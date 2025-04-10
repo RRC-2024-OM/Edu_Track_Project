@@ -1,7 +1,7 @@
 import admin from 'firebase-admin';
 import { db } from '../config/firebase';
 import { ROLES } from '../config/constants';
-import * as csvParser from 'csv-parse/lib/sync';
+import { parse } from 'csv-parse/sync';
 
 
 interface UserInput {
@@ -69,11 +69,11 @@ export class UserService {
 
   async importUsersFromCSV(buffer: Buffer) {
     const csvText = buffer.toString();
-    const records = csvParser.parse(csvText, {
-        columns: true,
-        skip_empty_lines: true,
-      });      
-
+    const records = parse(csvText, {
+      columns: true,
+      skip_empty_lines: true,
+    });
+        
     const results: any[] = [];
 
     for (const row of records) {
