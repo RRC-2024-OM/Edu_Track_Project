@@ -1,6 +1,13 @@
 const authMock = {
-  createUser: jest.fn(),
+  createUser: jest.fn(() => Promise.resolve({ uid: 'mock-uid' })),
   setCustomUserClaims: jest.fn(),
+  verifyIdToken: jest.fn(() =>
+    Promise.resolve({
+      uid: 'mock-superadmin',
+      email: 'superadmin@example.com',
+      role: 'SuperAdmin',
+    })
+  ),
 };
 
 const docMock = {
@@ -20,12 +27,12 @@ const firestoreMock = {
 };
 
 module.exports = {
-  apps: [], // Ensures admin.apps.length check works
+  apps: [],
   initializeApp: jest.fn(),
   credential: {
     applicationDefault: jest.fn(),
     cert: jest.fn(),
   },
-  auth: jest.fn(() => authMock),         // ✅ NOW a Jest mock function
-  firestore: jest.fn(() => firestoreMock), // ✅ NOW a Jest mock function
+  auth: jest.fn(() => authMock),
+  firestore: jest.fn(() => firestoreMock),
 };
