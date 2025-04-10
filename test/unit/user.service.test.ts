@@ -97,4 +97,66 @@ jane@example.com,pass456,Teacher,inst2`;
       expect(docMock.set).toHaveBeenCalled();
     });
   });
+
+  describe('createUser', () => {
+    it('should create a user with valid role and return user data', async () => {
+      const userInput = {
+        email: 'newuser@example.com',
+        role: 'Student',
+        institutionId: 'inst1',
+        name: 'New User',
+      };
+
+      const collectionMock = db.collection('users');
+      const docMock = collectionMock.doc();
+
+      (docMock.set as jest.Mock).mockResolvedValue(undefined);
+
+      const result = await service.createUser(userInput);
+
+      expect(result).toHaveProperty('id');
+      expect(result.email).toBe(userInput.email);
+      expect(docMock.set).toHaveBeenCalled();
+    });
+
+    it('should throw error on invalid role', async () => {
+      const userInput = {
+        email: 'bad@example.com',
+        role: 'Hacker', // Invalid
+      };
+
+      await expect(service.createUser(userInput as any)).rejects.toThrow('Invalid role');
+    });
+  });
+
+  describe('updateUser', () => {
+    it('should update a user and return the updated data', async () => {
+      const collectionMock = db.collection('users');
+      const docMock = collectionMock.doc('123');
+
+      const updatedUser = { name: 'Updated User' };
+
+      (docMock.update as jest.Mock).mockResolvedValue(undefined);
+      (docMock.get as jest.Mock).mockResolvedValueOnce({
+        data: () => updatedUser,
+      });
+
+      const result = await service.updateUser('123', updatedUser);
+      expect(result).toEqual({ id: '123', ...updatedUser });
+      expect(docMock.update).toHaveBeenCalledWith(expect.objectContaining(updatedUser));
+    });
+  });
+
+  describe('deleteUser', () => {
+    it('should delete a user and return confirmation', async () => {
+      const collectionMock = db.collection('users');
+      const docMock = collectionMock.doc('123');
+
+      (docMock.delete as jest.Mock).mockResolvedValue(undefined);
+
+      const result = await service.deleteUser('123');
+      expect(result).toEqual({ id: '123', deleted: true });
+      expect(docMock.delete).toHaveBeenCalled();
+    });
+  });
 });
