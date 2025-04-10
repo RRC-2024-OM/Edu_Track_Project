@@ -6,6 +6,7 @@ import { parse } from 'csv-parse/sync';
 
 interface UserInput {
   email: string;
+  password: string;
   role: string;
   institutionId?: string;
   name?: string;
@@ -42,16 +43,32 @@ export class UserService {
     if (!Object.values(ROLES).includes(userData.role)) {
       throw new Error(`Invalid role. Accepted roles: ${Object.values(ROLES).join(', ')}`);
     }
-
-    const userRef = db.collection('users').doc();
-    await userRef.set({
-      ...userData,
-      createdAt: new Date().toISOString(),
+  
+    const userRecord = await admin.auth().createUser({
+      email: userData.email,
+      password: userData.password,
+      displayName: userData.name || '',
     });
-
-    return { id: userRef.id, ...userData };
+  
+    await admin.auth().setCustomUserClaims(userRecord.uid, {
+      role: userData.role,
+      institutionId: userData.institutionId || null,
+    });
+  
+    const userDoc = {
+      uid: userRecord.uid,
+      email: userData.email,
+      role: userData.role,
+      institutionId: userData.institutionId || null,
+      name: userData.name || '',
+      createdAt: new Date().toISOString(),
+    };
+  
+    await db.collection('users').doc(userRecord.uid).set(userDoc);
+  
+    return userDoc;
   }
-
+  
   async updateUser(userId: string, updates: Partial<UserInput>) {
     const userRef = db.collection('users').doc(userId);
     await userRef.update({
