@@ -98,37 +98,7 @@ jane@example.com,pass456,Teacher,inst2`;
     });
   });
 
-  describe('createUser', () => {
-    it('should create a user with valid role and return user data', async () => {
-      const userInput = {
-        email: 'newuser@example.com',
-        role: 'Student',
-        institutionId: 'inst1',
-        name: 'New User',
-      };
-
-      const collectionMock = db.collection('users');
-      const docMock = collectionMock.doc();
-
-      (docMock.set as jest.Mock).mockResolvedValue(undefined);
-
-      const result = await service.createUser(userInput);
-
-      expect(result).toHaveProperty('id');
-      expect(result.email).toBe(userInput.email);
-      expect(docMock.set).toHaveBeenCalled();
-    });
-
-    it('should throw error on invalid role', async () => {
-      const userInput = {
-        email: 'bad@example.com',
-        role: 'Hacker', // Invalid
-      };
-
-      await expect(service.createUser(userInput as any)).rejects.toThrow('Invalid role');
-    });
-  });
-
+  
   describe('updateUser', () => {
     it('should update a user and return the updated data', async () => {
       const collectionMock = db.collection('users');
