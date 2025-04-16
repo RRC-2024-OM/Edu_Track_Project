@@ -2,6 +2,7 @@
 import { db } from '../config/firebase';
 import { EnrollmentData, UserWithRole } from '../types/enrollment.types';
 import { v4 as uuidv4 } from 'uuid';
+import { sendEmail } from '../utils/email.util';
 
 export default class EnrollmentService {
   private collection = db.collection('enrollments');
@@ -69,6 +70,29 @@ export default class EnrollmentService {
     }
 
     await this.collection.doc(id).update({ progress });
+
+    // Send notification to parent (if email available)
+    const studentSnapshot = await db.collection('users')
+      .where('uid', '==', data.studentId)
+      .get();
+
+    if (!studentSnapshot.empty) {
+      const student = studentSnapshot.docs[0].data();
+
+      if (student.parentEmail) {
+        await sendEmail({
+          to: student.parentEmail,
+          subject: `Progress Update for ${student.fullName || 'your child'}`,
+          html: `
+            <p>Dear Parent,</p>
+            <p>Your child <strong>${student.fullName || student.uid}</strong> has new course progress in <strong>${data.courseId}</strong>.</p>
+            <p>Updated progress: <strong>${progress}%</strong></p>
+            <p>Regards,<br>EduTrack Team</p>
+          `,
+        });
+      }
+    }
+
     return { ...data, progress };
   }
 
