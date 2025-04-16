@@ -1,8 +1,14 @@
+
 import request from 'supertest';
 import app from '../../src/app';
 import EnrollmentService from '../../src/services/enrollment.service';
 
+
 jest.mock('../../src/services/enrollment.service');
+
+jest.mock('../../src/utils/email.util', () => ({
+  sendEmail: jest.fn(),
+}));
 
 const MockEnrollmentService = EnrollmentService as jest.MockedClass<typeof EnrollmentService>;
 
@@ -65,7 +71,7 @@ describe('Enrollment Controller & Routes', () => {
   });
 
   describe('PUT /enrollments/:id/progress', () => {
-    it('should update enrollment progress', async () => {
+    it('should update enrollment progress and send email', async () => {
       const updated = { ...mockEnrollment, progress: 75 };
       MockEnrollmentService.prototype.updateProgress.mockResolvedValue(updated);
 
