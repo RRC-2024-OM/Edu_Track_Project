@@ -165,4 +165,69 @@ router.get(
   controller.exportTeacherAnalytics.bind(controller)
 );
 
+/**
+ * @swagger
+ * /analytics/institution/export/pdf:
+ *   get:
+ *     summary: Export institution-level analytics as a PDF
+ *     tags:
+ *       - Analytics
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       200:
+ *         description: PDF file containing institution analytics
+ *         content:
+ *           application/pdf:
+ *             schema:
+ *               type: string
+ *               format: binary
+ *       401:
+ *         description: Unauthorized – Missing or invalid token
+ *       403:
+ *         description: Forbidden – Insufficient permissions
+ *     x-roles:
+ *       - SuperAdmin
+ *       - InstitutionAdmin
+ */
+router.get(
+  '/institution/export/pdf',
+  AuthMiddleware.verifyToken,
+  RoleMiddleware.authorizeRoles('SuperAdmin', 'InstitutionAdmin'),
+  controller.exportInstitutionAnalyticsPdf.bind(controller)
+);
+
+/**
+ * @swagger
+ * /analytics/teachers/export/pdf:
+ *   get:
+ *     summary: Export teacher analytics as a PDF
+ *     tags:
+ *       - Analytics
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       200:
+ *         description: PDF file containing teacher analytics
+ *         content:
+ *           application/pdf:
+ *             schema:
+ *               type: string
+ *               format: binary
+ *       401:
+ *         description: Unauthorized – Missing or invalid token
+ *       403:
+ *         description: Forbidden – Insufficient permissions
+ *     x-roles:
+ *       - SuperAdmin
+ *       - InstitutionAdmin
+ */
+router.get(
+  '/teachers/export/pdf',
+  AuthMiddleware.verifyToken,
+  RoleMiddleware.authorizeRoles('SuperAdmin', 'InstitutionAdmin'),
+  controller.exportTeacherAnalyticsPdf.bind(controller)
+);
+
+
 export default router;
