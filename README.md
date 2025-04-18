@@ -151,6 +151,16 @@ src/
   - All sensitive routes require `Authorization` header
   - Firestore rules ensure institution isolation
 
+### 🔐 Firebase Security Rules
+
+EduTrack Pro enforces Firestore security rules to ensure:
+
+- **Institutional isolation** (each admin only accesses their school data)
+- **Role filtering** (read/write checks match Firebase custom claims)
+- **Validation** using Firestore rules + Joi schema on API level
+
+Rules are defined in `firestore.rules` and uploaded during deployment.
+
 ---
 
 ### ✅ Testing & Coverage
