@@ -23,7 +23,7 @@ EduTrack Pro is a **secure educational management system** offering isolated acc
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/your-username/edu-track-api.git
+   git clone https://github.com/RRC-2024-OM/Edu_Track_Project/tree/main
    cd edu-track-api
    ```
 
@@ -33,10 +33,9 @@ EduTrack Pro is a **secure educational management system** offering isolated acc
    ```
 
 3. **Setup Firebase**
-   - Get your Firebase service account key.
-   - Rename and place it as:
+   - Firebase service account key.
      ```
-     edu-track-project-firebase-adminsdk.json
+     edu-track-project-firebase-adminsdk-fbsvc-882909e2c4.json
      ```
 
 4. **Configure Environment Variables**
