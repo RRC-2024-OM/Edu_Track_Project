@@ -1,13 +1,12 @@
-name: Node.js CI
+name: TypeScript Lint and Reviewdog
 
 on:
-  push:
-    branches: [main]
   pull_request:
     branches: [main]
 
 jobs:
-  test:
+  lint:
+    name: Lint with ESLint and Reviewdog
     runs-on: ubuntu-latest
 
     steps:
@@ -22,6 +21,4 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      # Bypassing the test execution to make the action pass
-      - name: Skip tests to get green tick
-        run: echo "Tests are skipped. Green tick achieved!" 
+        
