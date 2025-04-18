@@ -1,0 +1,1242 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "EduTrack Pro API",
+    "version": "1.0.0",
+    "description": "Backend API for EduTrack Pro"
+  },
+  "paths": {
+    "/analytics/institution": {
+      "get": {
+        "summary": "Get institution-wide analytics",
+        "tags": [
+          "Analytics"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Institution analytics retrieved"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        }
+      }
+    },
+    "/analytics/teachers": {
+      "get": {
+        "summary": "Get performance metrics for all teachers",
+        "tags": [
+          "Analytics"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Teacher analytics retrieved"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        }
+      }
+    },
+    "/analytics/students/{id}": {
+      "get": {
+        "summary": "Get analytics for a specific student",
+        "tags": [
+          "Analytics"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Student ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Student analytics retrieved"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        }
+      }
+    },
+    "/analytics/courses/{id}": {
+      "get": {
+        "summary": "Get course engagement analytics",
+        "tags": [
+          "Analytics"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Course ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Course analytics retrieved"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        }
+      }
+    },
+    "/analytics/institution/export": {
+      "get": {
+        "summary": "Export institution analytics as CSV",
+        "tags": [
+          "Analytics"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "CSV file with institution analytics"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        }
+      }
+    },
+    "/analytics/teachers/export": {
+      "get": {
+        "summary": "Export teacher analytics as CSV",
+        "tags": [
+          "Analytics"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "CSV file with teacher analytics"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        }
+      }
+    },
+    "/analytics/institution/export/pdf": {
+      "get": {
+        "summary": "Export institution-level analytics as a PDF",
+        "tags": [
+          "Analytics"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "PDF file containing institution analytics",
+            "content": {
+              "application/pdf": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized – Missing or invalid token"
+          },
+          "403": {
+            "description": "Forbidden – Insufficient permissions"
+          }
+        },
+        "x-roles": [
+          "SuperAdmin",
+          "InstitutionAdmin"
+        ]
+      }
+    },
+    "/analytics/teachers/export/pdf": {
+      "get": {
+        "summary": "Export teacher analytics as a PDF",
+        "tags": [
+          "Analytics"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "PDF file containing teacher analytics",
+            "content": {
+              "application/pdf": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized – Missing or invalid token"
+          },
+          "403": {
+            "description": "Forbidden – Insufficient permissions"
+          }
+        },
+        "x-roles": [
+          "SuperAdmin",
+          "InstitutionAdmin"
+        ]
+      }
+    },
+    "/auth/register": {
+      "post": {
+        "summary": "Register a new user with role and institution",
+        "tags": [
+          "Auth"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "email",
+                  "password",
+                  "role",
+                  "institutionId"
+                ],
+                "properties": {
+                  "email": {
+                    "type": "string"
+                  },
+                  "password": {
+                    "type": "string"
+                  },
+                  "role": {
+                    "type": "string",
+                    "enum": [
+                      "SUPER_ADMIN",
+                      "INSTITUTION_ADMIN",
+                      "TEACHER",
+                      "STUDENT",
+                      "PARENT"
+                    ]
+                  },
+                  "institutionId": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "User registered successfully"
+          },
+          "400": {
+            "description": "Missing required fields or invalid role"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "500": {
+            "description": "Registration failed"
+          }
+        }
+      }
+    },
+    "/auth/login": {
+      "post": {
+        "summary": "Log in user and receive custom token",
+        "tags": [
+          "Auth"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "email",
+                  "password"
+                ],
+                "properties": {
+                  "email": {
+                    "type": "string"
+                  },
+                  "password": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Token issued",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "token": {
+                      "type": "string"
+                    },
+                    "uid": {
+                      "type": "string"
+                    },
+                    "email": {
+                      "type": "string"
+                    },
+                    "role": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Missing email or password"
+          },
+          "401": {
+            "description": "Invalid credentials or user not found"
+          }
+        }
+      }
+    },
+    "/auth/set-claims": {
+      "post": {
+        "summary": "Modify user role and institutionId (Super Admin only)",
+        "tags": [
+          "Auth"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "uid",
+                  "role"
+                ],
+                "properties": {
+                  "uid": {
+                    "type": "string"
+                  },
+                  "role": {
+                    "type": "string",
+                    "enum": [
+                      "SUPER_ADMIN",
+                      "INSTITUTION_ADMIN",
+                      "TEACHER",
+                      "STUDENT",
+                      "PARENT"
+                    ]
+                  },
+                  "institutionId": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Claims updated successfully"
+          },
+          "400": {
+            "description": "Missing or invalid data"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "500": {
+            "description": "Server error"
+          }
+        }
+      }
+    },
+    "/courses": {
+      "post": {
+        "summary": "Create a new course",
+        "tags": [
+          "Courses"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "title",
+                  "description",
+                  "institutionId",
+                  "teacherId"
+                ],
+                "properties": {
+                  "title": {
+                    "type": "string",
+                    "description": "The course's title"
+                  },
+                  "description": {
+                    "type": "string",
+                    "description": "The course's description"
+                  },
+                  "institutionId": {
+                    "type": "string",
+                    "description": "The institution associated with the course"
+                  },
+                  "teacherId": {
+                    "type": "string",
+                    "description": "The teacher who owns the course"
+                  },
+                  "isPublished": {
+                    "type": "boolean",
+                    "description": "Whether the course is published or not"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Course created successfully"
+          },
+          "400": {
+            "description": "Missing or invalid fields"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "500": {
+            "description": "Server error"
+          }
+        }
+      },
+      "get": {
+        "summary": "Get all courses",
+        "tags": [
+          "Courses"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "institutionId",
+            "schema": {
+              "type": "string"
+            },
+            "description": "The institutionId to filter courses by"
+          },
+          {
+            "in": "query",
+            "name": "isPublished",
+            "schema": {
+              "type": "boolean"
+            },
+            "description": "Filter courses by published status"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of courses",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "string"
+                      },
+                      "title": {
+                        "type": "string"
+                      },
+                      "description": {
+                        "type": "string"
+                      },
+                      "isPublished": {
+                        "type": "boolean"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "500": {
+            "description": "Server error"
+          }
+        }
+      }
+    },
+    "/courses/{id}": {
+      "get": {
+        "summary": "Get course details by ID",
+        "tags": [
+          "Courses"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The ID of the course"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The course details",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string"
+                    },
+                    "title": {
+                      "type": "string"
+                    },
+                    "description": {
+                      "type": "string"
+                    },
+                    "institutionId": {
+                      "type": "string"
+                    },
+                    "teacherId": {
+                      "type": "string"
+                    },
+                    "isPublished": {
+                      "type": "boolean"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Course not found"
+          },
+          "500": {
+            "description": "Server error"
+          }
+        }
+      },
+      "put": {
+        "summary": "Update course metadata",
+        "tags": [
+          "Courses"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The ID of the course"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "title": {
+                    "type": "string",
+                    "description": "The course's title"
+                  },
+                  "description": {
+                    "type": "string",
+                    "description": "The course's description"
+                  },
+                  "isPublished": {
+                    "type": "boolean",
+                    "description": "Whether the course is published"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Course updated successfully"
+          },
+          "400": {
+            "description": "Missing or invalid fields"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "500": {
+            "description": "Server error"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete (archive) a course by ID",
+        "tags": [
+          "Courses"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The ID of the course"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Course archived successfully"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "500": {
+            "description": "Server error"
+          }
+        }
+      }
+    },
+    "/courses/{id}/publish": {
+      "post": {
+        "summary": "Publish or unpublish a course",
+        "tags": [
+          "Courses"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The ID of the course"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Course published or unpublished successfully"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "500": {
+            "description": "Server error"
+          }
+        }
+      }
+    },
+    "/courses/{id}/stats": {
+      "get": {
+        "summary": "Get course enrollment stats",
+        "tags": [
+          "Courses"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The ID of the course"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Enrollment stats for the course",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "enrolled": {
+                      "type": "integer"
+                    },
+                    "averageProgress": {
+                      "type": "integer"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "500": {
+            "description": "Server error"
+          }
+        }
+      }
+    },
+    "/enrollments": {
+      "post": {
+        "summary": "Enroll a student into a course",
+        "tags": [
+          "Enrollments"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EnrollStudent"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Student successfully enrolled"
+          },
+          "403": {
+            "description": "Unauthorized"
+          }
+        }
+      },
+      "get": {
+        "summary": "Get enrollments with optional filters",
+        "tags": [
+          "Enrollments"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "courseId",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Filter by course ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of enrollments"
+          },
+          "403": {
+            "description": "Unauthorized"
+          }
+        }
+      }
+    },
+    "/enrollments/{id}": {
+      "delete": {
+        "summary": "Unenroll a student from a course",
+        "tags": [
+          "Enrollments"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "description": "Enrollment ID",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Enrollment successfully removed"
+          },
+          "403": {
+            "description": "Unauthorized"
+          }
+        }
+      }
+    },
+    "/enrollments/{id}/progress": {
+      "put": {
+        "summary": "Update a student's progress in a course",
+        "tags": [
+          "Enrollments"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "description": "Enrollment ID",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateProgress"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Progress updated"
+          },
+          "403": {
+            "description": "Unauthorized"
+          }
+        }
+      }
+    },
+    "/enrollments/students/{id}": {
+      "get": {
+        "summary": "Get all enrollments for a specific student",
+        "tags": [
+          "Enrollments"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "description": "Student ID",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Student enrollments retrieved"
+          },
+          "403": {
+            "description": "Unauthorized"
+          }
+        }
+      }
+    },
+    "/users": {
+      "get": {
+        "summary": "Get all users (Admin only)",
+        "tags": [
+          "Users"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "role",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Filter by user role"
+          },
+          {
+            "in": "query",
+            "name": "institutionId",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Filter by institution ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of users"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      },
+      "post": {
+        "summary": "Create a new user",
+        "tags": [
+          "Users"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "email",
+                  "role"
+                ],
+                "properties": {
+                  "email": {
+                    "type": "string"
+                  },
+                  "role": {
+                    "type": "string"
+                  },
+                  "institutionId": {
+                    "type": "string"
+                  },
+                  "name": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "User created"
+          },
+          "400": {
+            "description": "Missing fields"
+          },
+          "500": {
+            "description": "Server error"
+          }
+        }
+      }
+    },
+    "/users/{id}": {
+      "get": {
+        "summary": "Get a user by ID",
+        "tags": [
+          "Users"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The user"
+          },
+          "403": {
+            "description": "Unauthorized access"
+          },
+          "404": {
+            "description": "User not found"
+          }
+        }
+      },
+      "put": {
+        "summary": "Update a user by ID",
+        "tags": [
+          "Users"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "institutionId": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "User updated"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "500": {
+            "description": "Server error"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete a user by ID (SUPER_ADMIN only)",
+        "tags": [
+          "Users"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "User deleted"
+          },
+          "403": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Server error"
+          }
+        }
+      }
+    },
+    "/users/bulk": {
+      "post": {
+        "summary": "Bulk import users via CSV",
+        "tags": [
+          "Users"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "file": {
+                    "type": "string",
+                    "format": "binary"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Bulk import successful"
+          },
+          "400": {
+            "description": "No CSV provided"
+          },
+          "500": {
+            "description": "Import failed"
+          }
+        }
+      }
+    }
+  },
+  "components": {},
+  "tags": [
+    {
+      "name": "Analytics",
+      "description": "Endpoints for institution, teacher, student, and course analytics with export options"
+    },
+    {
+      "name": "Auth",
+      "description": "Authentication routes"
+    },
+    {
+      "name": "Courses",
+      "description": "Manage courses for the platform"
+    },
+    {
+      "name": "Enrollments",
+      "description": "Student Enrollment & Progress Tracking"
+    },
+    {
+      "name": "Users",
+      "description": "User management endpoints"
+    }
+  ]
+}

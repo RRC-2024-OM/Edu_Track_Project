@@ -1,4 +1,5 @@
 node_modules
 dist
 .env
+coverage
 edu-track-project-firebase-adminsdk-fbsvc-882909e2c4.json
