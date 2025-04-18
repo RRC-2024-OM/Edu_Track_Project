@@ -1,4 +1,4 @@
-name: Node.js CI
+name: 🛠️ CI - Lint, Test, TypeCheck, Docs
 
 on:
   push:
@@ -7,21 +7,34 @@ on:
     branches: [main]
 
 jobs:
-  test:
+  build:
+    name: 🧪 Run Linter, Type Check, Tests, and Docs
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
+      - name: 📥 Checkout code
         uses: actions/checkout@v3
 
-      - name: Setup Node.js
+      - name: 🟢 Use Node.js 18
         uses: actions/setup-node@v3
         with:
           node-version: 18
+          cache: "npm"
 
-      - name: Install dependencies
+      - name: 📦 Install dependencies
         run: npm install
 
-      # Bypassing the test execution to make the action pass
-      - name: Skip tests to get green tick
-        run: echo "Tests are skipped. Green tick achieved!" 
+      - name: 🧹 Lint with ESLint
+        run: npx eslint . --ext .ts
+
+      - name: 🧪 Run Jest Tests
+        run: npm test
+
+      - name: 🔍 TypeScript Type Check
+        run: npx tsc --noEmit
+
+      - name: 🧾 Generate OpenAPI Spec
+        run: npm run generate-docs
+
+      - name: ✅ CI Passed
+        run: echo "🎉 All checks passed!"
