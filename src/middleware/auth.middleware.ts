@@ -8,6 +8,7 @@ export interface AuthenticatedRequest extends Request {
     email: string;
     role: string;
     institutionId?: string;
+    childId?: string;
   };
 }
 
@@ -29,9 +30,10 @@ export class AuthMiddleware {
       // Safely attach user info to req (with the correct type)
       (req as AuthenticatedRequest).user = {
         uid: decodedToken.uid,
-        email: decodedToken.email || '', // Default empty string if email is not available
-        role: decodedToken.role || 'Student', // Default to 'Student' if no role is available
-        institutionId: decodedToken.institutionId || '', // Optional field for institution
+        email: decodedToken.email || '',
+        role: decodedToken.role || 'Student',
+        institutionId: decodedToken.institutionId || '',
+        childId: decodedToken.childId || '',
       };
 
       next(); // Proceed to the next middleware

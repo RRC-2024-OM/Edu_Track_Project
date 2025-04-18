@@ -4,6 +4,8 @@ import dotenv from 'dotenv';
 import authRoutes from './routes/auth.routes';
 import userRoutes from './routes/user.routes';
 import courseRoutes from './routes/course.routes';
+import enrollmentRoutes from './routes/enrollment.routes'
+import analyticsRoutes from './routes/analytics.routes';
 import { setupSwagger } from './config/swagger'; 
 
 
@@ -21,8 +23,13 @@ setupSwagger(app);
 app.use('/auth', authRoutes);
 app.use('/users', userRoutes);
 app.use('/courses', courseRoutes);
+app.use('/enrollments', enrollmentRoutes);
+app.use('/analytics', analyticsRoutes);
 
 
 app.listen(PORT, () => {
   console.log(`🚀 Server running on http://localhost:${PORT}`);
 });
+
+export default app;
+
