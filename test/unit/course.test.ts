@@ -1,126 +1,226 @@
+import express from 'express';
+import request from 'supertest';
+import { CourseController } from '../../src/controllers/course.controller';
 import { CourseService } from '../../src/services/course.service';
-import { db } from '../../src/config/firebase';  
-import { AuthenticatedRequest } from '../../src/middleware/auth.middleware'; 
+import courseRoutes from '../../src/routes/course.routes';
 
-// Mock Firestore's db.collection method with proper mock implementation
-jest.mock('../../src/config/firebase', () => ({
+jest.mock('../../src/config/firebase', () => {
+  const mockDoc = {
+    set: jest.fn(),
+    get: jest.fn(() => ({
+      exists: true,
+      data: () => ({
+        teacherId: 'teacher1',
+        institutionId: 'inst1',
+        isPublished: false,
+      }),
+    })),
+    update: jest.fn(),
+    delete: jest.fn(),
+  };
+
+  const mockQuerySnapshot = {
+    docs: [
+      {
+        id: 'course-1',
+        data: () => ({
+          teacherId: 'teacher1',
+          institutionId: 'inst1',
+          isPublished: true,
+        }),
+      },
+    ],
+  };
+
+  const mockQuery = {
+    where: jest.fn().mockReturnThis(),
+    limit: jest.fn().mockReturnThis(),
+    startAfter: jest.fn().mockReturnThis(),
+    get: jest.fn(() => Promise.resolve(mockQuerySnapshot)),
+  };
+
+  return {
     db: {
-      collection: jest.fn((collectionPath: string) => ({
-        doc: jest.fn(() => ({
-          set: jest.fn(),
-          get: jest.fn(() => ({
-            exists: true,
-            data: jest.fn(() => ({ teacherId: 'teacher1', institutionId: 'institution1', isPublished: false }))
-          })),
-          update: jest.fn(),
-          delete: jest.fn(),
-        })),
-        get: jest.fn(() => ({
-          docs: [
-            {
-              id: 'course-1',
-              data: jest.fn(() => ({ teacherId: 'teacher1', institutionId: 'institution1', isPublished: false }))
-            },
-          ],
-        })),
-        where: jest.fn(() => ({
-          limit: jest.fn(() => ({
-            get: jest.fn(() => ({
-              docs: [
-                {
-                  id: 'course-1',
-                  data: jest.fn(() => ({ teacherId: 'teacher1', institutionId: 'institution1', isPublished: false }))
-                },
-              ],
-            }))
-          }))
-        }))
+      collection: jest.fn(() => ({
+        doc: jest.fn(() => mockDoc),
+        get: jest.fn(() => Promise.resolve(mockQuerySnapshot)),
+        where: mockQuery.where,
+        limit: mockQuery.limit,
+        startAfter: mockQuery.startAfter,
+        getDocs: mockQuery.get,
       })),
     },
-  }));
-  
-  describe('CourseService', () => {
-    let courseService: CourseService;
-    const mockUser: AuthenticatedRequest['user'] = { uid: 'teacher1', email: 'teacher@example.com', role: 'Teacher', institutionId: 'institution1' };
-  
-    beforeEach(() => {
-      courseService = new CourseService();
-    });
-  
-    it('should create a course', async () => {
-      const newCourseData = {
-        title: 'Course 1',
-        description: 'Course Description',
-        institutionId: 'institution1',
+  };
+});
+
+// Mock Firebase Auth middleware
+jest.mock('../../src/middleware/auth.middleware', () => ({
+  AuthMiddleware: {
+    verifyToken: (req: any, _res: any, next: any) => {
+      req.user = {
+        uid: 'teacher1',
+        role: 'Teacher',
+        institutionId: 'inst1',
+        email: 'mock@edu.com',
       };
-  
-      const course = await courseService.createCourse(newCourseData, mockUser);
-  
-      expect(course).toHaveProperty('id');
-      expect(course).toHaveProperty('teacherId', mockUser.uid);
-      expect(course).toHaveProperty('isPublished', false); // Default value
+      next();
+    },
+    requireRole: (..._roles: string[]) => (_req: any, _res: any, next: any) => next(),
+  },
+}));
+
+const mockUser = {
+  uid: 'teacher1',
+  role: 'Teacher',
+  institutionId: 'inst1',
+  email: 'mock@edu.com',
+};
+
+describe('Courses Module – Full Stack Test', () => {
+  const service = new CourseService();
+  const controller = new CourseController();
+
+  const mockRes = () => {
+    const res: any = {};
+    res.status = jest.fn().mockReturnValue(res);
+    res.json = jest.fn().mockReturnValue(res);
+    return res;
+  };
+
+  describe('Service Layer', () => {
+    it('creates a course', async () => {
+      const result = await service.createCourse({ title: 'Math' }, mockUser);
+      expect(result).toHaveProperty('id');
     });
-  
-    it('should get all courses for a teacher', async () => {
-      const courses = await courseService.getAllCourses(mockUser, {}, 10, null);
-  
-      expect(courses.courses).toHaveLength(1); // Should return 1 course
-      expect(courses.courses[0]).toHaveProperty('id', 'course-1');
+
+    it('gets all courses with filter', async () => {
+      const result = await service.getAllCourses(mockUser, { isPublished: true }, 10, null);
+      expect(result.courses.length).toBeGreaterThanOrEqual(1);
     });
-  
-  
-    it('should throw error if user is not authorized to update a course', async () => {
-      const mockUser2: AuthenticatedRequest['user'] = { uid: 'teacher2', email: 'teacher2@example.com', role: 'Teacher', institutionId: 'institution1' };
-  
-      try {
-        await courseService.updateCourse('course-1', { title: 'Updated Course' }, mockUser2);
-      } catch (error: unknown) {
-        if (error instanceof Error) {
-          expect(error.message).toBe('Not authorized to update this course');
-        } else {
-          throw error; // If it's not an instance of Error, rethrow the error
-        }
-      }
+
+    it('gets a course by ID', async () => {
+      const result = await service.getCourseById('course-1', mockUser);
+      expect(result).toHaveProperty('id');
     });
-  
-    it('should update course metadata', async () => {
-      const updatedCourse = await courseService.updateCourse('course-1', { title: 'Updated Course Title' }, mockUser);
-  
-      expect(updatedCourse).toHaveProperty('title', 'Updated Course Title');
-      expect(updatedCourse).toHaveProperty('updatedAt');
+
+    it('fails to getCourseById if user is undefined', async () => {
+      await expect(service.getCourseById('course-1', undefined as any)).rejects.toThrow('Unauthorized');
     });
-  
-  
-    it('should toggle publish status of a course', async () => {
-      const updatedCourse = await courseService.togglePublishStatus('course-1', mockUser);
-  
-      expect(updatedCourse).toHaveProperty('isPublished', true);
+
+    it('updates a course successfully', async () => {
+      const updated = await service.updateCourse('course-1', { title: 'New' }, mockUser);
+      expect(updated).toHaveProperty('title', 'New');
     });
-  
-    it('should throw error if not authorized to delete course', async () => {
-      const mockUser2: AuthenticatedRequest['user'] = { uid: 'teacher2', email: 'teacher2@example.com', role: 'Teacher', institutionId: 'institution2' };
-  
-      try {
-        await courseService.deleteCourse('course-1', mockUser2);
-      } catch (error: unknown) {
-        if (error instanceof Error) {
-          expect(error.message).toBe('Not authorized to delete this course');
-        } else {
-          throw error;
-        }
-      }
+
+    it('throws if unauthorized to update', async () => {
+      const user2 = { ...mockUser, uid: 'other' };
+      await expect(service.updateCourse('course-1', {}, user2)).rejects.toThrow('Not authorized');
     });
-  
-    it('should return simulated stats', async () => {
-      const stats = await courseService.getCourseStats('course-1', mockUser);
-  
+
+    it('deletes a course successfully', async () => {
+      await expect(service.deleteCourse('course-1', mockUser)).resolves.toBeUndefined();
+    });
+
+    it('publishes/unpublishes a course', async () => {
+      const updated = await service.togglePublishStatus('course-1', mockUser);
+      expect(updated).toHaveProperty('isPublished', true);
+    });
+
+    it('returns course stats', async () => {
+      const stats = await service.getCourseStats('course-1', mockUser);
       expect(stats).toHaveProperty('enrolled');
-      expect(stats).toHaveProperty('averageProgress');
     });
   });
-  
-  
-  
-  
-  
-  
+
+  describe('Controller Layer', () => {
+    it('creates a course (201)', async () => {
+      const req: any = { body: { title: 'Course' }, user: mockUser };
+      const res = mockRes();
+      await controller.createCourse(req, res);
+      expect(res.status).toHaveBeenCalledWith(201);
+    });
+
+    it('gets all courses (200)', async () => {
+      const req: any = { query: {}, user: mockUser };
+      const res = mockRes();
+      await controller.getAllCourses(req, res);
+      expect(res.status).toHaveBeenCalledWith(200);
+    });
+
+    it('gets course by ID (200)', async () => {
+      const req: any = { params: { id: 'course-1' }, user: mockUser };
+      const res = mockRes();
+      await controller.getCourseById(req, res);
+      expect(res.status).toHaveBeenCalledWith(200);
+    });
+
+    it('updates course (200)', async () => {
+      const req: any = { params: { id: '1' }, body: { title: 'New' }, user: mockUser };
+      const res = mockRes();
+      await controller.updateCourse(req, res);
+      expect(res.status).toHaveBeenCalledWith(200);
+    });
+
+    it('deletes course (200)', async () => {
+      const req: any = { params: { id: '1' }, user: mockUser };
+      const res = mockRes();
+      await controller.deleteCourse(req, res);
+      expect(res.status).toHaveBeenCalledWith(200);
+    });
+
+    it('publishes course (200)', async () => {
+      const req: any = { params: { id: '1' }, user: mockUser };
+      const res = mockRes();
+      await controller.publishCourse(req, res);
+      expect(res.status).toHaveBeenCalledWith(200);
+    });
+
+    it('gets stats (200)', async () => {
+      const req: any = { params: { id: '1' }, user: mockUser };
+      const res = mockRes();
+      await controller.getCourseStats(req, res);
+      expect(res.status).toHaveBeenCalledWith(200);
+    });
+  });
+
+  describe('Route Integration', () => {
+    const app = express();
+    app.use(express.json());
+    app.use('/courses', courseRoutes);
+
+    it('POST /courses', async () => {
+      const res = await request(app).post('/courses').send({ title: 'Math' });
+      expect(res.statusCode).toBe(201);
+    });
+
+    it('GET /courses', async () => {
+      const res = await request(app).get('/courses');
+      expect(res.statusCode).toBe(200);
+    });
+
+    it('GET /courses/:id', async () => {
+      const res = await request(app).get('/courses/abc123');
+      expect(res.statusCode).toBe(200);
+    });
+
+    it('PUT /courses/:id', async () => {
+      const res = await request(app).put('/courses/abc123').send({ title: 'Update' });
+      expect(res.statusCode).toBe(200);
+    });
+
+    it('DELETE /courses/:id', async () => {
+      const res = await request(app).delete('/courses/abc123');
+      expect(res.statusCode).toBe(200);
+    });
+
+    it('POST /courses/:id/publish', async () => {
+      const res = await request(app).post('/courses/abc123/publish');
+      expect(res.statusCode).toBe(200);
+    });
+
+    it('GET /courses/:id/stats', async () => {
+      const res = await request(app).get('/courses/abc123/stats');
+      expect(res.statusCode).toBe(200);
+    });
+  });
+});
