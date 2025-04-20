@@ -1,0 +1,1024 @@
+{
+	"info": {
+		"_postman_id": "864013bd-46d5-4ce0-8cc4-f1cba5e57bbf",
+		"name": "Edu_Track_Project",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "41176872",
+		"_collection_link": "https://apimangement.postman.co/workspace/Back-End~a675db3d-a669-407d-8e90-89dd6354d3f6/collection/41176872-864013bd-46d5-4ce0-8cc4-f1cba5e57bbf?action=share&source=collection_link&creator=41176872"
+	},
+	"item": [
+		{
+			"name": "User Mangement",
+			"item": [
+				{
+					"name": "Get All User",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJSUzI1NiIsImtpZCI6IjkwOTg1NzhjNDg4MWRjMDVlYmYxOWExNWJhMjJkOGZkMWFiMzRjOGEiLCJ0eXAiOiJKV1QifQ.eyJyb2xlIjoiU3VwZXJBZG1pbiIsImluc3RpdHV0aW9uSWQiOiJpbnN0XzAwMiIsImlzcyI6Imh0dHBzOi8vc2VjdXJldG9rZW4uZ29vZ2xlLmNvbS9lZHUtdHJhY2stcHJvamVjdCIsImF1ZCI6ImVkdS10cmFjay1wcm9qZWN0IiwiYXV0aF90aW1lIjoxNzQ1MDE3Mzk5LCJ1c2VyX2lkIjoiaUpVbm13YUxFN09jMWNXWVp0VTJNVjBJUDNDMiIsInN1YiI6ImlKVW5td2FMRTdPYzFjV1ladFUyTVYwSVAzQzIiLCJpYXQiOjE3NDUwMTczOTksImV4cCI6MTc0NTAyMDk5OSwiZW1haWwiOiJzdXBlcmFkbWludXNlckBleGFtcGxlLmNvbSIsImVtYWlsX3ZlcmlmaWVkIjpmYWxzZSwiZmlyZWJhc2UiOnsiaWRlbnRpdGllcyI6eyJlbWFpbCI6WyJzdXBlcmFkbWludXNlckBleGFtcGxlLmNvbSJdfSwic2lnbl9pbl9wcm92aWRlciI6InBhc3N3b3JkIn19.YZ5tdPjWwF-1MjBUejOQWTwrkcLn7regKTErrJobPubEvGxRjA8Vq0QJcabzX3bWa_pnaB1BTGUs5-_ahRQfmXXesHAK7eVqLR3byXNt4BsfWggpSr8gBHvAvMr5k7C5qdtVRhlZetXIwUk_ib1hoJPDim5931IUTpMqBlRI4s4yFHyl8BjBlnEPyzC5AVsQFAAeF-3I9jnsxJg62CoqFl0nuns4q4GQADMniEBfW4XxiwdTCv_5sIRXEJyqu1mSQsEZnBy4yD452rWFZuf9l2mzmPQ-3M45YJqR_7TJzkHHZlaOjA8oUon9Q_Erw8Nl0S83upBl3XJ2PlJ3WGCggg",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3000/users",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Import CSV bulk file",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJSUzI1NiIsImtpZCI6Ijg1NzA4MWNhOWNiYjM3YzIzNDk4ZGQzOTQzYmYzNzFhMDU4ODNkMjgiLCJ0eXAiOiJKV1QifQ.eyJyb2xlIjoiU3VwZXJBZG1pbiIsImluc3RpdHV0aW9uSWQiOiJpbnN0XzAwMiIsImlzcyI6Imh0dHBzOi8vc2VjdXJldG9rZW4uZ29vZ2xlLmNvbS9lZHUtdHJhY2stcHJvamVjdCIsImF1ZCI6ImVkdS10cmFjay1wcm9qZWN0IiwiYXV0aF90aW1lIjoxNzQ0ODIzMTM2LCJ1c2VyX2lkIjoiaUpVbm13YUxFN09jMWNXWVp0VTJNVjBJUDNDMiIsInN1YiI6ImlKVW5td2FMRTdPYzFjV1ladFUyTVYwSVAzQzIiLCJpYXQiOjE3NDQ4MjMxMzYsImV4cCI6MTc0NDgyNjczNiwiZW1haWwiOiJzdXBlcmFkbWludXNlckBleGFtcGxlLmNvbSIsImVtYWlsX3ZlcmlmaWVkIjpmYWxzZSwiZmlyZWJhc2UiOnsiaWRlbnRpdGllcyI6eyJlbWFpbCI6WyJzdXBlcmFkbWludXNlckBleGFtcGxlLmNvbSJdfSwic2lnbl9pbl9wcm92aWRlciI6InBhc3N3b3JkIn19.j7tVvztXM5XH6QIfQR1EfUEjsuk1xsj9FizO9_gQFWvoCNefPdH2dONr8wrklW_MGcnnmBbT1eeB17jhVKCYQ9wgRnz1upBARauP8XtoKyVjQRMKfPCEOUs2VMW1F8ETILmDlwMzf7hb9mCFNmK_vA4UYt4kT3kTZU7MYheqlG869vn_XlsOz1hKD2TPV7v7Yb5v8BpYdzlKLiocMsCInhQUkT-quyJX41Jh1fHky5GtPuM6bdGcqn5ruV8XihmWexnjZoHaaFX6dJwLZfAAkrQWDpOnY8aSPkyMHqg0t3y3v19SumlDK3LN5QvBWpYRYUgRlHpcqsjWo4vM0AetZQ",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "file",
+									"type": "file",
+									"src": "/C:/Users/ompat/Downloads/edu_users_bulk_real_names.csv"
+								},
+								{
+									"key": "",
+									"type": "file",
+									"src": [],
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:3000/users/bulk",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"users",
+								"bulk"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update User Information ",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJSUzI1NiIsImtpZCI6IjcxMTE1MjM1YTZjNjE0NTRlZmRlZGM0NWE3N2U0MzUxMzY3ZWViZTAiLCJ0eXAiOiJKV1QifQ.eyJyb2xlIjoiU3VwZXJBZG1pbiIsImluc3RpdHV0aW9uSWQiOiJpbnN0XzAwMiIsImlzcyI6Imh0dHBzOi8vc2VjdXJldG9rZW4uZ29vZ2xlLmNvbS9lZHUtdHJhY2stcHJvamVjdCIsImF1ZCI6ImVkdS10cmFjay1wcm9qZWN0IiwiYXV0aF90aW1lIjoxNzQ0MzIxNzgzLCJ1c2VyX2lkIjoiaUpVbm13YUxFN09jMWNXWVp0VTJNVjBJUDNDMiIsInN1YiI6ImlKVW5td2FMRTdPYzFjV1ladFUyTVYwSVAzQzIiLCJpYXQiOjE3NDQzMjE3ODMsImV4cCI6MTc0NDMyNTM4MywiZW1haWwiOiJzdXBlcmFkbWludXNlckBleGFtcGxlLmNvbSIsImVtYWlsX3ZlcmlmaWVkIjpmYWxzZSwiZmlyZWJhc2UiOnsiaWRlbnRpdGllcyI6eyJlbWFpbCI6WyJzdXBlcmFkbWludXNlckBleGFtcGxlLmNvbSJdfSwic2lnbl9pbl9wcm92aWRlciI6InBhc3N3b3JkIn19.c0TK5ezrYxC0B8hK7isb_fO1bjqkzOwX3GRxy_pbliBF28VJmdXsmGXMIZMYiNrTbTg4tDjMxrtKXNOU4osuieKEizL-vouK958Z2ufbWK_cJVGiBG5nERFSNie1Vziy3OaH-XXlrS7kTrk5j0Vd9M3De4CCQetJeCZrbRnT9ptW7CxAnPo9IX-WSoalOtJZaKzp_csjZx1JDBTAKziEOLfZ0pen68dPltqPyX46TmV4YJPXsKWa22sgYRLcv_zCRXYcyram2fq2x3dbKql01wOkTOOHwL4FSAr-pJncQtWtgSNN0-8ODqcxw9KirST6PHkh5rwOOkSSStWDrDzUDA",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"fullName\": \"Karan\",\r\n  \"role\": \"parent\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/users/5XVud3j91iWXBwCCtG8D2P2YW2n1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"users",
+								"5XVud3j91iWXBwCCtG8D2P2YW2n1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get User by ID",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJSUzI1NiIsImtpZCI6IjcxMTE1MjM1YTZjNjE0NTRlZmRlZGM0NWE3N2U0MzUxMzY3ZWViZTAiLCJ0eXAiOiJKV1QifQ.eyJyb2xlIjoiU3VwZXJBZG1pbiIsImluc3RpdHV0aW9uSWQiOiJpbnN0XzAwMiIsImlzcyI6Imh0dHBzOi8vc2VjdXJldG9rZW4uZ29vZ2xlLmNvbS9lZHUtdHJhY2stcHJvamVjdCIsImF1ZCI6ImVkdS10cmFjay1wcm9qZWN0IiwiYXV0aF90aW1lIjoxNzQ0MzIzNzI0LCJ1c2VyX2lkIjoiaUpVbm13YUxFN09jMWNXWVp0VTJNVjBJUDNDMiIsInN1YiI6ImlKVW5td2FMRTdPYzFjV1ladFUyTVYwSVAzQzIiLCJpYXQiOjE3NDQzMjM3MjQsImV4cCI6MTc0NDMyNzMyNCwiZW1haWwiOiJzdXBlcmFkbWludXNlckBleGFtcGxlLmNvbSIsImVtYWlsX3ZlcmlmaWVkIjpmYWxzZSwiZmlyZWJhc2UiOnsiaWRlbnRpdGllcyI6eyJlbWFpbCI6WyJzdXBlcmFkbWludXNlckBleGFtcGxlLmNvbSJdfSwic2lnbl9pbl9wcm92aWRlciI6InBhc3N3b3JkIn19.Ealv-Dlkfj07n_EDH_kFz7vGZUST9lEwKva6LGcoFAuhq1Zc8QSAgGNMUDfqV6wyu4RGupxc9Ye6362Q9xr1z5YXf3kMwhkr9BCOJYiUuVmBnMyWPvdyTrw1OymaUYsawQSwFrsS1FqVcuCbWkHUHjWGqEYSFAOr8YJ6Q8kAfPVEauTVrZ5A5QCEoBOxojgC0mWaNOicOErszxkhf3a9byMYTmc4Ou5TQlKQ1pwVHpOjtFf52zm-bcSFuJdU_q0sG-LulXsYFeRuAMsPtQIEWMFs7KD7ZCdaHxwlFMTmfE8Xv-Ie5NglScsVDzMl3N37IsTsVnh3lNUvPez04BIDOA",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3000/users/9HoGGo6luJVVKGPSo6INa1s35uA3",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"users",
+								"9HoGGo6luJVVKGPSo6INa1s35uA3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete User by ID",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJSUzI1NiIsImtpZCI6IjcxMTE1MjM1YTZjNjE0NTRlZmRlZGM0NWE3N2U0MzUxMzY3ZWViZTAiLCJ0eXAiOiJKV1QifQ.eyJyb2xlIjoiU3VwZXJBZG1pbiIsImluc3RpdHV0aW9uSWQiOiJpbnN0XzAwMiIsImlzcyI6Imh0dHBzOi8vc2VjdXJldG9rZW4uZ29vZ2xlLmNvbS9lZHUtdHJhY2stcHJvamVjdCIsImF1ZCI6ImVkdS10cmFjay1wcm9qZWN0IiwiYXV0aF90aW1lIjoxNzQ0MzIyMjgyLCJ1c2VyX2lkIjoiaUpVbm13YUxFN09jMWNXWVp0VTJNVjBJUDNDMiIsInN1YiI6ImlKVW5td2FMRTdPYzFjV1ladFUyTVYwSVAzQzIiLCJpYXQiOjE3NDQzMjIyODIsImV4cCI6MTc0NDMyNTg4MiwiZW1haWwiOiJzdXBlcmFkbWludXNlckBleGFtcGxlLmNvbSIsImVtYWlsX3ZlcmlmaWVkIjpmYWxzZSwiZmlyZWJhc2UiOnsiaWRlbnRpdGllcyI6eyJlbWFpbCI6WyJzdXBlcmFkbWludXNlckBleGFtcGxlLmNvbSJdfSwic2lnbl9pbl9wcm92aWRlciI6InBhc3N3b3JkIn19.Sz_tUUZmz0kkF1CboyTgBXt_H4OxjwRkgbA8F_OoIhjjO3DMkgFVxCIhohEtNcuaaUc7KKwbikby35ReRzBmsBt5M8_g_u7SK5naqObdhHPez6JsUz8c-J9n7M-R4_1QRy48OMFB0b-X7QrYBqrynNcnFosWV5lCgJ8qpE6NLEz0f_3mAue9h8rgRYM4aaU99X5RRExFykT60S-CBVbFKUryJk5cB5r4q23tjIB3nadeVWzsa2MUegO28KEHBMTRbo7qe4xpJ372xmnj_e_5LUl4OmzhPg9qM8C62gvVgulxkUzpDz6DakUXwhAnyd1MFDysDVEUDD55jzvUsKsd3w",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3000/users/5XVud3j91iWXBwCCtG8D2P2YW2n1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"users",
+								"5XVud3j91iWXBwCCtG8D2P2YW2n1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Authentication routes",
+			"item": [
+				{
+					"name": "Login",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"email\": \"thomas.west@edutrack.com\",\r\n  \"password\": \"Teach@9968\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/auth/login?",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"auth",
+								"login"
+							],
+							"query": [
+								{
+									"key": "",
+									"value": null
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "User Registration",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJSUzI1NiIsImtpZCI6Ijg1NzA4MWNhOWNiYjM3YzIzNDk4ZGQzOTQzYmYzNzFhMDU4ODNkMjgiLCJ0eXAiOiJKV1QifQ.eyJyb2xlIjoiU3VwZXJBZG1pbiIsImluc3RpdHV0aW9uSWQiOiJpbnN0XzAwMiIsImlzcyI6Imh0dHBzOi8vc2VjdXJldG9rZW4uZ29vZ2xlLmNvbS9lZHUtdHJhY2stcHJvamVjdCIsImF1ZCI6ImVkdS10cmFjay1wcm9qZWN0IiwiYXV0aF90aW1lIjoxNzQ0ODIxOTI2LCJ1c2VyX2lkIjoiaUpVbm13YUxFN09jMWNXWVp0VTJNVjBJUDNDMiIsInN1YiI6ImlKVW5td2FMRTdPYzFjV1ladFUyTVYwSVAzQzIiLCJpYXQiOjE3NDQ4MjE5MjYsImV4cCI6MTc0NDgyNTUyNiwiZW1haWwiOiJzdXBlcmFkbWludXNlckBleGFtcGxlLmNvbSIsImVtYWlsX3ZlcmlmaWVkIjpmYWxzZSwiZmlyZWJhc2UiOnsiaWRlbnRpdGllcyI6eyJlbWFpbCI6WyJzdXBlcmFkbWludXNlckBleGFtcGxlLmNvbSJdfSwic2lnbl9pbl9wcm92aWRlciI6InBhc3N3b3JkIn19.fWA6pc90oA6Oi4eKNx-jxuD9VNDFlOymaZ2MpFCrTsFpynT93WZFVLqzhUwltJCPE_1rfJf--wrpxRPwzWjUsgO26M-2icABXlR7pbFTsySb2xrigjZA74D3gjx967mY-ZZcePYbCWdfXbDNZ7Htz07wxG2mn9F6-IWZKsvJOQYFmcFwG8jADZyu7KSHGA0XmAQcRDMsIychfgaAXRblDZdDPKJk3aeIkoSuWyiZlqAC50Ir429-clXWcYqw7cxqVMbSGkKh8FUCzC3qVyfl-35c1guBZFqL72ozhiJxqj35zIPurhN_JTTFLw1Kg5md_LG5khg70q25dQGbQrl8GQ",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"email\": \"YUT@example.com\",\r\n  \"password\": \"exampale123\",\r\n  \"role\": \"Student\",\r\n  \"institutionId\": \"inst_0012\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/auth/register",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"auth",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get ID Token",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"email\": \"superadminuser@example.com\",\r\n  \"password\": \"superadmin1234\",\r\n  \"returnSecureToken\": true\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyDEjCZpu-0tGfxFfn7GDBUVbiI8mAk_K3E",
+							"protocol": "https",
+							"host": [
+								"identitytoolkit",
+								"googleapis",
+								"com"
+							],
+							"path": [
+								"v1",
+								"accounts:signInWithPassword"
+							],
+							"query": [
+								{
+									"key": "key",
+									"value": "AIzaSyDEjCZpu-0tGfxFfn7GDBUVbiI8mAk_K3E"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Set-Claim",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJSUzI1NiIsImtpZCI6Ijg1NzA4MWNhOWNiYjM3YzIzNDk4ZGQzOTQzYmYzNzFhMDU4ODNkMjgiLCJ0eXAiOiJKV1QifQ.eyJyb2xlIjoiU3VwZXJBZG1pbiIsImluc3RpdHV0aW9uSWQiOiJpbnN0XzAwMiIsImlzcyI6Imh0dHBzOi8vc2VjdXJldG9rZW4uZ29vZ2xlLmNvbS9lZHUtdHJhY2stcHJvamVjdCIsImF1ZCI6ImVkdS10cmFjay1wcm9qZWN0IiwiYXV0aF90aW1lIjoxNzQ0ODIzMTM2LCJ1c2VyX2lkIjoiaUpVbm13YUxFN09jMWNXWVp0VTJNVjBJUDNDMiIsInN1YiI6ImlKVW5td2FMRTdPYzFjV1ladFUyTVYwSVAzQzIiLCJpYXQiOjE3NDQ4MjMxMzYsImV4cCI6MTc0NDgyNjczNiwiZW1haWwiOiJzdXBlcmFkbWludXNlckBleGFtcGxlLmNvbSIsImVtYWlsX3ZlcmlmaWVkIjpmYWxzZSwiZmlyZWJhc2UiOnsiaWRlbnRpdGllcyI6eyJlbWFpbCI6WyJzdXBlcmFkbWludXNlckBleGFtcGxlLmNvbSJdfSwic2lnbl9pbl9wcm92aWRlciI6InBhc3N3b3JkIn19.j7tVvztXM5XH6QIfQR1EfUEjsuk1xsj9FizO9_gQFWvoCNefPdH2dONr8wrklW_MGcnnmBbT1eeB17jhVKCYQ9wgRnz1upBARauP8XtoKyVjQRMKfPCEOUs2VMW1F8ETILmDlwMzf7hb9mCFNmK_vA4UYt4kT3kTZU7MYheqlG869vn_XlsOz1hKD2TPV7v7Yb5v8BpYdzlKLiocMsCInhQUkT-quyJX41Jh1fHky5GtPuM6bdGcqn5ruV8XihmWexnjZoHaaFX6dJwLZfAAkrQWDpOnY8aSPkyMHqg0t3y3v19SumlDK3LN5QvBWpYRYUgRlHpcqsjWo4vM0AetZQ",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"uid\": \"1qCIS7RTn1heY1ut1FlnUQO1oJ23\",\r\n  \"role\": \"Student\",\r\n  \"institutionId\": \"institution-1\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/auth/set-claims?",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"auth",
+								"set-claims"
+							],
+							"query": [
+								{
+									"key": "",
+									"value": null
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Course Management",
+			"item": [
+				{
+					"name": "Get All Course",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJSUzI1NiIsImtpZCI6Ijg1NzA4MWNhOWNiYjM3YzIzNDk4ZGQzOTQzYmYzNzFhMDU4ODNkMjgiLCJ0eXAiOiJKV1QifQ.eyJyb2xlIjoiU3VwZXJBZG1pbiIsImluc3RpdHV0aW9uSWQiOiJpbnN0XzAwMiIsImlzcyI6Imh0dHBzOi8vc2VjdXJldG9rZW4uZ29vZ2xlLmNvbS9lZHUtdHJhY2stcHJvamVjdCIsImF1ZCI6ImVkdS10cmFjay1wcm9qZWN0IiwiYXV0aF90aW1lIjoxNzQ0ODE4MjIyLCJ1c2VyX2lkIjoiaUpVbm13YUxFN09jMWNXWVp0VTJNVjBJUDNDMiIsInN1YiI6ImlKVW5td2FMRTdPYzFjV1ladFUyTVYwSVAzQzIiLCJpYXQiOjE3NDQ4MTgyMjIsImV4cCI6MTc0NDgyMTgyMiwiZW1haWwiOiJzdXBlcmFkbWludXNlckBleGFtcGxlLmNvbSIsImVtYWlsX3ZlcmlmaWVkIjpmYWxzZSwiZmlyZWJhc2UiOnsiaWRlbnRpdGllcyI6eyJlbWFpbCI6WyJzdXBlcmFkbWludXNlckBleGFtcGxlLmNvbSJdfSwic2lnbl9pbl9wcm92aWRlciI6InBhc3N3b3JkIn19.HpmVDq94kyTYickzPmXJ1SPROliB3Nx4K0Q5ObCibybj4oRGy6w-316fP9Y_wpGakkJwDw9go3qhOsqQIeGheGko5OUT-kRbpSBTENxvJTlcdmLJjlbi2mQlMGh8ViO8YuFQ6vHQwGrIFsXw-hy9RR57rqSh_Vpwvj5EXyMGK3RdZ0Zv27yCQVx_L92vzWViNhwLDhfSrBRx3wbnZGbnzfpL_PVvRTB8dad2K133-Ph6L1GtROSMfVRa9ORqHWNycGsWSGc0y1uFzAWY-pKhISxo-QnnA9rvwI0XeQ5t-wBEbu7OwedxB3FpwUkdcfQgs5hdk0bxXIhMfQw45WSIHQ",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3000/courses",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"courses"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Course",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJSUzI1NiIsImtpZCI6Ijg1NzA4MWNhOWNiYjM3YzIzNDk4ZGQzOTQzYmYzNzFhMDU4ODNkMjgiLCJ0eXAiOiJKV1QifQ.eyJyb2xlIjoiU3VwZXJBZG1pbiIsImluc3RpdHV0aW9uSWQiOiJpbnN0XzAwMiIsImlzcyI6Imh0dHBzOi8vc2VjdXJldG9rZW4uZ29vZ2xlLmNvbS9lZHUtdHJhY2stcHJvamVjdCIsImF1ZCI6ImVkdS10cmFjay1wcm9qZWN0IiwiYXV0aF90aW1lIjoxNzQ0NjM4NTU3LCJ1c2VyX2lkIjoiaUpVbm13YUxFN09jMWNXWVp0VTJNVjBJUDNDMiIsInN1YiI6ImlKVW5td2FMRTdPYzFjV1ladFUyTVYwSVAzQzIiLCJpYXQiOjE3NDQ2Mzg1NTcsImV4cCI6MTc0NDY0MjE1NywiZW1haWwiOiJzdXBlcmFkbWludXNlckBleGFtcGxlLmNvbSIsImVtYWlsX3ZlcmlmaWVkIjpmYWxzZSwiZmlyZWJhc2UiOnsiaWRlbnRpdGllcyI6eyJlbWFpbCI6WyJzdXBlcmFkbWludXNlckBleGFtcGxlLmNvbSJdfSwic2lnbl9pbl9wcm92aWRlciI6InBhc3N3b3JkIn19.LVEKbfgCI7rsKtxK9KpWQkKSqypTPdoQ1HqUsuavcNFDvIOP3y7gF_QMsijQ317Pe7VRMFgVE74IqXL_WUD8ayz829vW6b9u8bOmCE7hmVe2Vi9BQLTUeQZVgivwBTfzhlS9nmWcKHe-EQShkK04MN2yWTjFQ0oo1e3w569zVvT0SUmsAV5HvUvZeqEa1TKWYyzk4LkIeRlDTl3gh6CHimM4vVJAr24Ubmw9pJ9okyLXt_eRvxgBC1TqJjytpjqMEjy1Y5mskxGHOEwNR7khX8-uDZHZA5UOIdI_iRlHPA5JAsT9wvKPLut-5PlnVzyKwkw1W8zhzOZA8Y1WwxLs0g",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"title\": \"Sanskrit 101\",\r\n  \"description\": \"Intro to Sanskrit\",\r\n  \"institutionId\": \"inst005\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/courses?",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"courses"
+							],
+							"query": [
+								{
+									"key": "",
+									"value": null
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Course by ID",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJSUzI1NiIsImtpZCI6IjcxMTE1MjM1YTZjNjE0NTRlZmRlZGM0NWE3N2U0MzUxMzY3ZWViZTAiLCJ0eXAiOiJKV1QifQ.eyJyb2xlIjoiU3VwZXJBZG1pbiIsImluc3RpdHV0aW9uSWQiOiJpbnN0XzAwMiIsImlzcyI6Imh0dHBzOi8vc2VjdXJldG9rZW4uZ29vZ2xlLmNvbS9lZHUtdHJhY2stcHJvamVjdCIsImF1ZCI6ImVkdS10cmFjay1wcm9qZWN0IiwiYXV0aF90aW1lIjoxNzQ0MzI0NTIxLCJ1c2VyX2lkIjoiaUpVbm13YUxFN09jMWNXWVp0VTJNVjBJUDNDMiIsInN1YiI6ImlKVW5td2FMRTdPYzFjV1ladFUyTVYwSVAzQzIiLCJpYXQiOjE3NDQzMjQ1MjEsImV4cCI6MTc0NDMyODEyMSwiZW1haWwiOiJzdXBlcmFkbWludXNlckBleGFtcGxlLmNvbSIsImVtYWlsX3ZlcmlmaWVkIjpmYWxzZSwiZmlyZWJhc2UiOnsiaWRlbnRpdGllcyI6eyJlbWFpbCI6WyJzdXBlcmFkbWludXNlckBleGFtcGxlLmNvbSJdfSwic2lnbl9pbl9wcm92aWRlciI6InBhc3N3b3JkIn19.nWKfAStbnrv2B_38pai3Ui9_g7zWEKlCsqU3V0vrglXI2gGiIL-6ePIg5pZG9yDyEJniVY6zgM9WZCNjpWFt0yGwT9dCU5C0dgVxcrFUhauztr1xEUwHEJWXdkks_Sn5NYCrMokLxSWDWdlr0BZx7kBbi0rJtQtTAB_d8Tc505Jrv-ihD5-6yBDiEy7Sv3fpcZpw201rB1CStoY68r9jF_SmHkMrL3786dwxGxGaqJ0dqdce4-edMbpBpBIVUNlRcZmLZf8vs3SCFUhkCFeNxA39-_E197rIkmHsAuace6DRDhM4QGh1TLiq86GYFhE2_693PnFompAg05cXNG49Dg",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3000/courses/d2Z9qCHvVyau26gO9SUP",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"courses",
+								"d2Z9qCHvVyau26gO9SUP"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Course",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJSUzI1NiIsImtpZCI6IjcxMTE1MjM1YTZjNjE0NTRlZmRlZGM0NWE3N2U0MzUxMzY3ZWViZTAiLCJ0eXAiOiJKV1QifQ.eyJyb2xlIjoiU3VwZXJBZG1pbiIsImluc3RpdHV0aW9uSWQiOiJpbnN0XzAwMiIsImlzcyI6Imh0dHBzOi8vc2VjdXJldG9rZW4uZ29vZ2xlLmNvbS9lZHUtdHJhY2stcHJvamVjdCIsImF1ZCI6ImVkdS10cmFjay1wcm9qZWN0IiwiYXV0aF90aW1lIjoxNzQ0MzI0NTIxLCJ1c2VyX2lkIjoiaUpVbm13YUxFN09jMWNXWVp0VTJNVjBJUDNDMiIsInN1YiI6ImlKVW5td2FMRTdPYzFjV1ladFUyTVYwSVAzQzIiLCJpYXQiOjE3NDQzMjQ1MjEsImV4cCI6MTc0NDMyODEyMSwiZW1haWwiOiJzdXBlcmFkbWludXNlckBleGFtcGxlLmNvbSIsImVtYWlsX3ZlcmlmaWVkIjpmYWxzZSwiZmlyZWJhc2UiOnsiaWRlbnRpdGllcyI6eyJlbWFpbCI6WyJzdXBlcmFkbWludXNlckBleGFtcGxlLmNvbSJdfSwic2lnbl9pbl9wcm92aWRlciI6InBhc3N3b3JkIn19.nWKfAStbnrv2B_38pai3Ui9_g7zWEKlCsqU3V0vrglXI2gGiIL-6ePIg5pZG9yDyEJniVY6zgM9WZCNjpWFt0yGwT9dCU5C0dgVxcrFUhauztr1xEUwHEJWXdkks_Sn5NYCrMokLxSWDWdlr0BZx7kBbi0rJtQtTAB_d8Tc505Jrv-ihD5-6yBDiEy7Sv3fpcZpw201rB1CStoY68r9jF_SmHkMrL3786dwxGxGaqJ0dqdce4-edMbpBpBIVUNlRcZmLZf8vs3SCFUhkCFeNxA39-_E197rIkmHsAuace6DRDhM4QGh1TLiq86GYFhE2_693PnFompAg05cXNG49Dg",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"title\": \"Advanced Physics\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/courses/SG8ZbXjnNob2qBFAgEs8",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"courses",
+								"SG8ZbXjnNob2qBFAgEs8"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Course",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJSUzI1NiIsImtpZCI6IjcxMTE1MjM1YTZjNjE0NTRlZmRlZGM0NWE3N2U0MzUxMzY3ZWViZTAiLCJ0eXAiOiJKV1QifQ.eyJyb2xlIjoiU3VwZXJBZG1pbiIsImluc3RpdHV0aW9uSWQiOiJpbnN0XzAwMiIsImlzcyI6Imh0dHBzOi8vc2VjdXJldG9rZW4uZ29vZ2xlLmNvbS9lZHUtdHJhY2stcHJvamVjdCIsImF1ZCI6ImVkdS10cmFjay1wcm9qZWN0IiwiYXV0aF90aW1lIjoxNzQ0MzI0NTIxLCJ1c2VyX2lkIjoiaUpVbm13YUxFN09jMWNXWVp0VTJNVjBJUDNDMiIsInN1YiI6ImlKVW5td2FMRTdPYzFjV1ladFUyTVYwSVAzQzIiLCJpYXQiOjE3NDQzMjQ1MjEsImV4cCI6MTc0NDMyODEyMSwiZW1haWwiOiJzdXBlcmFkbWludXNlckBleGFtcGxlLmNvbSIsImVtYWlsX3ZlcmlmaWVkIjpmYWxzZSwiZmlyZWJhc2UiOnsiaWRlbnRpdGllcyI6eyJlbWFpbCI6WyJzdXBlcmFkbWludXNlckBleGFtcGxlLmNvbSJdfSwic2lnbl9pbl9wcm92aWRlciI6InBhc3N3b3JkIn19.nWKfAStbnrv2B_38pai3Ui9_g7zWEKlCsqU3V0vrglXI2gGiIL-6ePIg5pZG9yDyEJniVY6zgM9WZCNjpWFt0yGwT9dCU5C0dgVxcrFUhauztr1xEUwHEJWXdkks_Sn5NYCrMokLxSWDWdlr0BZx7kBbi0rJtQtTAB_d8Tc505Jrv-ihD5-6yBDiEy7Sv3fpcZpw201rB1CStoY68r9jF_SmHkMrL3786dwxGxGaqJ0dqdce4-edMbpBpBIVUNlRcZmLZf8vs3SCFUhkCFeNxA39-_E197rIkmHsAuace6DRDhM4QGh1TLiq86GYFhE2_693PnFompAg05cXNG49Dg",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3000/courses/SG8ZbXjnNob2qBFAgEs8",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"courses",
+								"SG8ZbXjnNob2qBFAgEs8"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Publish  Course",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJSUzI1NiIsImtpZCI6Ijg1NzA4MWNhOWNiYjM3YzIzNDk4ZGQzOTQzYmYzNzFhMDU4ODNkMjgiLCJ0eXAiOiJKV1QifQ.eyJyb2xlIjoiU3VwZXJBZG1pbiIsImluc3RpdHV0aW9uSWQiOiJpbnN0XzAwMiIsImlzcyI6Imh0dHBzOi8vc2VjdXJldG9rZW4uZ29vZ2xlLmNvbS9lZHUtdHJhY2stcHJvamVjdCIsImF1ZCI6ImVkdS10cmFjay1wcm9qZWN0IiwiYXV0aF90aW1lIjoxNzQ0NjM3NjgyLCJ1c2VyX2lkIjoiaUpVbm13YUxFN09jMWNXWVp0VTJNVjBJUDNDMiIsInN1YiI6ImlKVW5td2FMRTdPYzFjV1ladFUyTVYwSVAzQzIiLCJpYXQiOjE3NDQ2Mzc2ODIsImV4cCI6MTc0NDY0MTI4MiwiZW1haWwiOiJzdXBlcmFkbWludXNlckBleGFtcGxlLmNvbSIsImVtYWlsX3ZlcmlmaWVkIjpmYWxzZSwiZmlyZWJhc2UiOnsiaWRlbnRpdGllcyI6eyJlbWFpbCI6WyJzdXBlcmFkbWludXNlckBleGFtcGxlLmNvbSJdfSwic2lnbl9pbl9wcm92aWRlciI6InBhc3N3b3JkIn19.QJdomtDQQclYO1ymhZP1WUh45tqjr3O75EGO2_Ls6y4hAaM7CzCTYP4Od77B3XYL16SGbjpmvUcKhvbBU8JRQM08hCinZtYA7-G-Qyz_S27YdOTVKqldFD305wcZ5m0ULNmjcVli2jGXmVc7Lj8eCGewhxgAyAhYJziyq1d65Z3ZV6iqlmbAmh0HoPiFL6slNOcEA8JNJloGGuKuJMNHspLhyBQY-WFBGcU1A-JajJyCHVhQEl2IZJWu4Xj5zXlVa6rmgVkNg9yRqY4YSBIeNpa78lVh1y9uXRogjLueK4pewb3ekARTPHaCGySuYv_AjmJmtMXzIQuM9KrjQ6tc5Q",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3000/courses/TPI0wHWCDRsJGkxuhkdj/publish",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"courses",
+								"TPI0wHWCDRsJGkxuhkdj",
+								"publish"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Enrollment Management",
+			"item": [
+				{
+					"name": "Enrollment",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJSUzI1NiIsImtpZCI6Ijg1NzA4MWNhOWNiYjM3YzIzNDk4ZGQzOTQzYmYzNzFhMDU4ODNkMjgiLCJ0eXAiOiJKV1QifQ.eyJyb2xlIjoiVGVhY2hlciIsImluc3RpdHV0aW9uSWQiOiJpbnN0aXR1dGlvbi0xIiwiaXNzIjoiaHR0cHM6Ly9zZWN1cmV0b2tlbi5nb29nbGUuY29tL2VkdS10cmFjay1wcm9qZWN0IiwiYXVkIjoiZWR1LXRyYWNrLXByb2plY3QiLCJhdXRoX3RpbWUiOjE3NDQ4MjM3NTAsInVzZXJfaWQiOiJPZE9SQnB2RTVzZllFTWNDYXYwaXcwVjNGbG8yIiwic3ViIjoiT2RPUkJwdkU1c2ZZRU1jQ2F2MGl3MFYzRmxvMiIsImlhdCI6MTc0NDgyMzc1MCwiZXhwIjoxNzQ0ODI3MzUwLCJlbWFpbCI6InRob21hcy53ZXN0QGVkdXRyYWNrLmNvbSIsImVtYWlsX3ZlcmlmaWVkIjpmYWxzZSwiZmlyZWJhc2UiOnsiaWRlbnRpdGllcyI6eyJlbWFpbCI6WyJ0aG9tYXMud2VzdEBlZHV0cmFjay5jb20iXX0sInNpZ25faW5fcHJvdmlkZXIiOiJwYXNzd29yZCJ9fQ.RetkZMIwNDjWBJsic6-c4Gy2q_SUnwYWzbTpoL4-xpvl0hcCBnMU8UyuJ8vDLicLCKWvyvP4peh2NO7nJAclROg9g2ClZyAUq_l3UcxmpigO-ojp8jW3-JSSq2V881dMOQXwn6uu8uKlrjs3AcwpIQIfSlrjrmjP2oNygEF-Lh1tW_vF6bSPJWlFD1OPnrnF3dNosF1uunuBg0yKjNnZCIntDVivA-QL8g5f2S_vDE1U9vuVpnN1y1xSeZRxprsTKV0xsEu-LtGLCVVcGqqvTapJSvv_hFcxzjhfo6HyGI9IEJ2kqHs5hlfPd88Ih2F8M1jchzbc7V6c3WuumaPXMA",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"courseId\": \"CDIdVvJdrhEcVQD1l668\",\r\n  \"studentId\": \"1qCIS7RTn1heY1ut1FlnUQO1oJ23\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/enrollments",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"enrollments"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Enrollments",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJSUzI1NiIsImtpZCI6Ijg1NzA4MWNhOWNiYjM3YzIzNDk4ZGQzOTQzYmYzNzFhMDU4ODNkMjgiLCJ0eXAiOiJKV1QifQ.eyJyb2xlIjoiVGVhY2hlciIsImluc3RpdHV0aW9uSWQiOiJpbnN0aXR1dGlvbi0xIiwiaXNzIjoiaHR0cHM6Ly9zZWN1cmV0b2tlbi5nb29nbGUuY29tL2VkdS10cmFjay1wcm9qZWN0IiwiYXVkIjoiZWR1LXRyYWNrLXByb2plY3QiLCJhdXRoX3RpbWUiOjE3NDQ4MjM3NTAsInVzZXJfaWQiOiJPZE9SQnB2RTVzZllFTWNDYXYwaXcwVjNGbG8yIiwic3ViIjoiT2RPUkJwdkU1c2ZZRU1jQ2F2MGl3MFYzRmxvMiIsImlhdCI6MTc0NDgyMzc1MCwiZXhwIjoxNzQ0ODI3MzUwLCJlbWFpbCI6InRob21hcy53ZXN0QGVkdXRyYWNrLmNvbSIsImVtYWlsX3ZlcmlmaWVkIjpmYWxzZSwiZmlyZWJhc2UiOnsiaWRlbnRpdGllcyI6eyJlbWFpbCI6WyJ0aG9tYXMud2VzdEBlZHV0cmFjay5jb20iXX0sInNpZ25faW5fcHJvdmlkZXIiOiJwYXNzd29yZCJ9fQ.RetkZMIwNDjWBJsic6-c4Gy2q_SUnwYWzbTpoL4-xpvl0hcCBnMU8UyuJ8vDLicLCKWvyvP4peh2NO7nJAclROg9g2ClZyAUq_l3UcxmpigO-ojp8jW3-JSSq2V881dMOQXwn6uu8uKlrjs3AcwpIQIfSlrjrmjP2oNygEF-Lh1tW_vF6bSPJWlFD1OPnrnF3dNosF1uunuBg0yKjNnZCIntDVivA-QL8g5f2S_vDE1U9vuVpnN1y1xSeZRxprsTKV0xsEu-LtGLCVVcGqqvTapJSvv_hFcxzjhfo6HyGI9IEJ2kqHs5hlfPd88Ih2F8M1jchzbc7V6c3WuumaPXMA",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3000/enrollments",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"enrollments"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Enrollment for specific course",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJSUzI1NiIsImtpZCI6Ijg1NzA4MWNhOWNiYjM3YzIzNDk4ZGQzOTQzYmYzNzFhMDU4ODNkMjgiLCJ0eXAiOiJKV1QifQ.eyJyb2xlIjoiVGVhY2hlciIsImluc3RpdHV0aW9uSWQiOiJpbnN0aXR1dGlvbi0xIiwiaXNzIjoiaHR0cHM6Ly9zZWN1cmV0b2tlbi5nb29nbGUuY29tL2VkdS10cmFjay1wcm9qZWN0IiwiYXVkIjoiZWR1LXRyYWNrLXByb2plY3QiLCJhdXRoX3RpbWUiOjE3NDQ4MjM3NTAsInVzZXJfaWQiOiJPZE9SQnB2RTVzZllFTWNDYXYwaXcwVjNGbG8yIiwic3ViIjoiT2RPUkJwdkU1c2ZZRU1jQ2F2MGl3MFYzRmxvMiIsImlhdCI6MTc0NDgyMzc1MCwiZXhwIjoxNzQ0ODI3MzUwLCJlbWFpbCI6InRob21hcy53ZXN0QGVkdXRyYWNrLmNvbSIsImVtYWlsX3ZlcmlmaWVkIjpmYWxzZSwiZmlyZWJhc2UiOnsiaWRlbnRpdGllcyI6eyJlbWFpbCI6WyJ0aG9tYXMud2VzdEBlZHV0cmFjay5jb20iXX0sInNpZ25faW5fcHJvdmlkZXIiOiJwYXNzd29yZCJ9fQ.RetkZMIwNDjWBJsic6-c4Gy2q_SUnwYWzbTpoL4-xpvl0hcCBnMU8UyuJ8vDLicLCKWvyvP4peh2NO7nJAclROg9g2ClZyAUq_l3UcxmpigO-ojp8jW3-JSSq2V881dMOQXwn6uu8uKlrjs3AcwpIQIfSlrjrmjP2oNygEF-Lh1tW_vF6bSPJWlFD1OPnrnF3dNosF1uunuBg0yKjNnZCIntDVivA-QL8g5f2S_vDE1U9vuVpnN1y1xSeZRxprsTKV0xsEu-LtGLCVVcGqqvTapJSvv_hFcxzjhfo6HyGI9IEJ2kqHs5hlfPd88Ih2F8M1jchzbc7V6c3WuumaPXMA",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3000/enrollments?courseId=CDIdVvJdrhEcVQD1l668",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"enrollments"
+							],
+							"query": [
+								{
+									"key": "courseId",
+									"value": "CDIdVvJdrhEcVQD1l668"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Remove Enrollments",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJSUzI1NiIsImtpZCI6Ijg1NzA4MWNhOWNiYjM3YzIzNDk4ZGQzOTQzYmYzNzFhMDU4ODNkMjgiLCJ0eXAiOiJKV1QifQ.eyJyb2xlIjoiU3VwZXJBZG1pbiIsImluc3RpdHV0aW9uSWQiOiJpbnN0XzAwMiIsImlzcyI6Imh0dHBzOi8vc2VjdXJldG9rZW4uZ29vZ2xlLmNvbS9lZHUtdHJhY2stcHJvamVjdCIsImF1ZCI6ImVkdS10cmFjay1wcm9qZWN0IiwiYXV0aF90aW1lIjoxNzQ0ODE5MzE3LCJ1c2VyX2lkIjoiaUpVbm13YUxFN09jMWNXWVp0VTJNVjBJUDNDMiIsInN1YiI6ImlKVW5td2FMRTdPYzFjV1ladFUyTVYwSVAzQzIiLCJpYXQiOjE3NDQ4MTkzMTcsImV4cCI6MTc0NDgyMjkxNywiZW1haWwiOiJzdXBlcmFkbWludXNlckBleGFtcGxlLmNvbSIsImVtYWlsX3ZlcmlmaWVkIjpmYWxzZSwiZmlyZWJhc2UiOnsiaWRlbnRpdGllcyI6eyJlbWFpbCI6WyJzdXBlcmFkbWludXNlckBleGFtcGxlLmNvbSJdfSwic2lnbl9pbl9wcm92aWRlciI6InBhc3N3b3JkIn19.vEtdj1FN6FWL9kSiNVlR1OfwKLwCYNOjFFVFCpjlhMnHRjF_2lpK0wxIWTywpT1mhgoNYvIcYeY8edccgLnKAnxcDw0zXTSy8buFC62OKpLci59p24wKoT8NjX0HK6ovZyHV-xj8NC7M7NY9-jmBPt680aRACZF5bNDv6N6ianXO-c8N2y95SCCpNOe0IFMkZLCb6hWkwFgbjfD2kM4LigsI4qhlS1DF-IVshp5cg1FVZZx7p-Ik0Ds4eseU2V4gBd0XwjGkauQ1HB5QqgiNBo6tnoaGUdehNDJCzagSjEsgkyaoBiBSYhDfE9f3QvCVKippC6wOz8X5dYmetJx7sw",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3000/enrollments/b57548e6-0161-4e9e-9969-beeb26b16c4a",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"enrollments",
+								"b57548e6-0161-4e9e-9969-beeb26b16c4a"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update progress",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJSUzI1NiIsImtpZCI6Ijg1NzA4MWNhOWNiYjM3YzIzNDk4ZGQzOTQzYmYzNzFhMDU4ODNkMjgiLCJ0eXAiOiJKV1QifQ.eyJyb2xlIjoiVGVhY2hlciIsImluc3RpdHV0aW9uSWQiOiJpbnN0aXR1dGlvbi0xIiwiaXNzIjoiaHR0cHM6Ly9zZWN1cmV0b2tlbi5nb29nbGUuY29tL2VkdS10cmFjay1wcm9qZWN0IiwiYXVkIjoiZWR1LXRyYWNrLXByb2plY3QiLCJhdXRoX3RpbWUiOjE3NDQ4MjM3NTAsInVzZXJfaWQiOiJPZE9SQnB2RTVzZllFTWNDYXYwaXcwVjNGbG8yIiwic3ViIjoiT2RPUkJwdkU1c2ZZRU1jQ2F2MGl3MFYzRmxvMiIsImlhdCI6MTc0NDgyMzc1MCwiZXhwIjoxNzQ0ODI3MzUwLCJlbWFpbCI6InRob21hcy53ZXN0QGVkdXRyYWNrLmNvbSIsImVtYWlsX3ZlcmlmaWVkIjpmYWxzZSwiZmlyZWJhc2UiOnsiaWRlbnRpdGllcyI6eyJlbWFpbCI6WyJ0aG9tYXMud2VzdEBlZHV0cmFjay5jb20iXX0sInNpZ25faW5fcHJvdmlkZXIiOiJwYXNzd29yZCJ9fQ.RetkZMIwNDjWBJsic6-c4Gy2q_SUnwYWzbTpoL4-xpvl0hcCBnMU8UyuJ8vDLicLCKWvyvP4peh2NO7nJAclROg9g2ClZyAUq_l3UcxmpigO-ojp8jW3-JSSq2V881dMOQXwn6uu8uKlrjs3AcwpIQIfSlrjrmjP2oNygEF-Lh1tW_vF6bSPJWlFD1OPnrnF3dNosF1uunuBg0yKjNnZCIntDVivA-QL8g5f2S_vDE1U9vuVpnN1y1xSeZRxprsTKV0xsEu-LtGLCVVcGqqvTapJSvv_hFcxzjhfo6HyGI9IEJ2kqHs5hlfPd88Ih2F8M1jchzbc7V6c3WuumaPXMA",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"progress\": 5\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/enrollments/a9e65148-9c73-4558-8830-9eb74de7cb84/progress",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"enrollments",
+								"a9e65148-9c73-4558-8830-9eb74de7cb84",
+								"progress"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Fetch Enrolled Courses",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJSUzI1NiIsImtpZCI6Ijg1NzA4MWNhOWNiYjM3YzIzNDk4ZGQzOTQzYmYzNzFhMDU4ODNkMjgiLCJ0eXAiOiJKV1QifQ.eyJyb2xlIjoiVGVhY2hlciIsImluc3RpdHV0aW9uSWQiOiJpbnN0aXR1dGlvbi0xIiwiaXNzIjoiaHR0cHM6Ly9zZWN1cmV0b2tlbi5nb29nbGUuY29tL2VkdS10cmFjay1wcm9qZWN0IiwiYXVkIjoiZWR1LXRyYWNrLXByb2plY3QiLCJhdXRoX3RpbWUiOjE3NDQ4MjQyMjAsInVzZXJfaWQiOiJPZE9SQnB2RTVzZllFTWNDYXYwaXcwVjNGbG8yIiwic3ViIjoiT2RPUkJwdkU1c2ZZRU1jQ2F2MGl3MFYzRmxvMiIsImlhdCI6MTc0NDgyNDIyMCwiZXhwIjoxNzQ0ODI3ODIwLCJlbWFpbCI6InRob21hcy53ZXN0QGVkdXRyYWNrLmNvbSIsImVtYWlsX3ZlcmlmaWVkIjpmYWxzZSwiZmlyZWJhc2UiOnsiaWRlbnRpdGllcyI6eyJlbWFpbCI6WyJ0aG9tYXMud2VzdEBlZHV0cmFjay5jb20iXX0sInNpZ25faW5fcHJvdmlkZXIiOiJwYXNzd29yZCJ9fQ.Qns7iEj8NSJ_GWLJDP24o6yx4tz54x30nFA5pL4jzKMfvsoMdA_Cuss0j_dur4HE0gn0OQ0aA_uC2AQrgA48ghE3DYpNWqtWlLKkRqT6SGxhkQoYUtwtDixBsSlorSsTrnISCYkVAxfQ2wQNFFhG0TTmI4dxU5o4uLlc3MsQ0wSObwEweDBXIAEPDkGYKwQ7NpSGR3Gfdzlhw9uhx9_9Feep5WdmCzSRhMiTGIeXaCdlkeVWOZQJCvUo94aY70gKW4wUO8fAVCwVV1n0eJiU2tm_-fxfhPxFqcO7wG40q55BugG_ECYAYLEz5u_QRSSHV1H-zaNr9NF_VKuMiRlbXA",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3000/enrollments/students/1qCIS7RTn1heY1ut1FlnUQO1oJ23",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"enrollments",
+								"students",
+								"1qCIS7RTn1heY1ut1FlnUQO1oJ23"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Analytics",
+			"item": [
+				{
+					"name": "Get institution-wide analytics",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJSUzI1NiIsImtpZCI6IjkwOTg1NzhjNDg4MWRjMDVlYmYxOWExNWJhMjJkOGZkMWFiMzRjOGEiLCJ0eXAiOiJKV1QifQ.eyJyb2xlIjoiU3VwZXJBZG1pbiIsImluc3RpdHV0aW9uSWQiOiJpbnN0XzAwMiIsImlzcyI6Imh0dHBzOi8vc2VjdXJldG9rZW4uZ29vZ2xlLmNvbS9lZHUtdHJhY2stcHJvamVjdCIsImF1ZCI6ImVkdS10cmFjay1wcm9qZWN0IiwiYXV0aF90aW1lIjoxNzQ1MDE3NzU2LCJ1c2VyX2lkIjoiaUpVbm13YUxFN09jMWNXWVp0VTJNVjBJUDNDMiIsInN1YiI6ImlKVW5td2FMRTdPYzFjV1ladFUyTVYwSVAzQzIiLCJpYXQiOjE3NDUwMTc3NTYsImV4cCI6MTc0NTAyMTM1NiwiZW1haWwiOiJzdXBlcmFkbWludXNlckBleGFtcGxlLmNvbSIsImVtYWlsX3ZlcmlmaWVkIjpmYWxzZSwiZmlyZWJhc2UiOnsiaWRlbnRpdGllcyI6eyJlbWFpbCI6WyJzdXBlcmFkbWludXNlckBleGFtcGxlLmNvbSJdfSwic2lnbl9pbl9wcm92aWRlciI6InBhc3N3b3JkIn19.lO4zKYT6NAfSHwobuzfoBXwGCkmJ-OdT9EQUNXuMBpoYGnmUpNmvyrAXjXVrs_xkbuOpqVgH2IS1Nz4kZ0oWVUA7fqzNtcMSLxSuED05PRUIspWVELbeZZqhZd6fiwZBbdgAwcu60gq-GvGOwrMSZLPNSUeVdA6rBCW1T3toEzOxoc7_GcnrJswV5dIOXSSepgs8ZzUW2HMyZ6Z0WEclmLXVaP5RgGLRxFuRRmW3m-BAwh_rVdwiq8m-DRCuvLdJf3uR75wmaEeQV41yshOgVrICWoUG7ASEmhaKCVro0Rqb6B8trc5-1JM3Ry71-iFOvoc6JrMfRU5Gpq-0gVk0PA",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3000/analytics/institution",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"analytics",
+								"institution"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Returns performance data for all teachers.",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJSUzI1NiIsImtpZCI6IjkwOTg1NzhjNDg4MWRjMDVlYmYxOWExNWJhMjJkOGZkMWFiMzRjOGEiLCJ0eXAiOiJKV1QifQ.eyJyb2xlIjoiU3VwZXJBZG1pbiIsImluc3RpdHV0aW9uSWQiOiJpbnN0XzAwMiIsImlzcyI6Imh0dHBzOi8vc2VjdXJldG9rZW4uZ29vZ2xlLmNvbS9lZHUtdHJhY2stcHJvamVjdCIsImF1ZCI6ImVkdS10cmFjay1wcm9qZWN0IiwiYXV0aF90aW1lIjoxNzQ1MDE3NzU2LCJ1c2VyX2lkIjoiaUpVbm13YUxFN09jMWNXWVp0VTJNVjBJUDNDMiIsInN1YiI6ImlKVW5td2FMRTdPYzFjV1ladFUyTVYwSVAzQzIiLCJpYXQiOjE3NDUwMTc3NTYsImV4cCI6MTc0NTAyMTM1NiwiZW1haWwiOiJzdXBlcmFkbWludXNlckBleGFtcGxlLmNvbSIsImVtYWlsX3ZlcmlmaWVkIjpmYWxzZSwiZmlyZWJhc2UiOnsiaWRlbnRpdGllcyI6eyJlbWFpbCI6WyJzdXBlcmFkbWludXNlckBleGFtcGxlLmNvbSJdfSwic2lnbl9pbl9wcm92aWRlciI6InBhc3N3b3JkIn19.lO4zKYT6NAfSHwobuzfoBXwGCkmJ-OdT9EQUNXuMBpoYGnmUpNmvyrAXjXVrs_xkbuOpqVgH2IS1Nz4kZ0oWVUA7fqzNtcMSLxSuED05PRUIspWVELbeZZqhZd6fiwZBbdgAwcu60gq-GvGOwrMSZLPNSUeVdA6rBCW1T3toEzOxoc7_GcnrJswV5dIOXSSepgs8ZzUW2HMyZ6Z0WEclmLXVaP5RgGLRxFuRRmW3m-BAwh_rVdwiq8m-DRCuvLdJf3uR75wmaEeQV41yshOgVrICWoUG7ASEmhaKCVro0Rqb6B8trc5-1JM3Ry71-iFOvoc6JrMfRU5Gpq-0gVk0PA",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3000/analytics/teachers",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"analytics",
+								"teachers"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get analytics for a specific student",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJSUzI1NiIsImtpZCI6IjkwOTg1NzhjNDg4MWRjMDVlYmYxOWExNWJhMjJkOGZkMWFiMzRjOGEiLCJ0eXAiOiJKV1QifQ.eyJyb2xlIjoiU3VwZXJBZG1pbiIsImluc3RpdHV0aW9uSWQiOiJpbnN0XzAwMiIsImlzcyI6Imh0dHBzOi8vc2VjdXJldG9rZW4uZ29vZ2xlLmNvbS9lZHUtdHJhY2stcHJvamVjdCIsImF1ZCI6ImVkdS10cmFjay1wcm9qZWN0IiwiYXV0aF90aW1lIjoxNzQ1MDE3NzU2LCJ1c2VyX2lkIjoiaUpVbm13YUxFN09jMWNXWVp0VTJNVjBJUDNDMiIsInN1YiI6ImlKVW5td2FMRTdPYzFjV1ladFUyTVYwSVAzQzIiLCJpYXQiOjE3NDUwMTc3NTYsImV4cCI6MTc0NTAyMTM1NiwiZW1haWwiOiJzdXBlcmFkbWludXNlckBleGFtcGxlLmNvbSIsImVtYWlsX3ZlcmlmaWVkIjpmYWxzZSwiZmlyZWJhc2UiOnsiaWRlbnRpdGllcyI6eyJlbWFpbCI6WyJzdXBlcmFkbWludXNlckBleGFtcGxlLmNvbSJdfSwic2lnbl9pbl9wcm92aWRlciI6InBhc3N3b3JkIn19.lO4zKYT6NAfSHwobuzfoBXwGCkmJ-OdT9EQUNXuMBpoYGnmUpNmvyrAXjXVrs_xkbuOpqVgH2IS1Nz4kZ0oWVUA7fqzNtcMSLxSuED05PRUIspWVELbeZZqhZd6fiwZBbdgAwcu60gq-GvGOwrMSZLPNSUeVdA6rBCW1T3toEzOxoc7_GcnrJswV5dIOXSSepgs8ZzUW2HMyZ6Z0WEclmLXVaP5RgGLRxFuRRmW3m-BAwh_rVdwiq8m-DRCuvLdJf3uR75wmaEeQV41yshOgVrICWoUG7ASEmhaKCVro0Rqb6B8trc5-1JM3Ry71-iFOvoc6JrMfRU5Gpq-0gVk0PA",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3000/analytics/students/1qCIS7RTn1heY1ut1FlnUQO1oJ23",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"analytics",
+								"students",
+								"1qCIS7RTn1heY1ut1FlnUQO1oJ23"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get course engagement stats",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJSUzI1NiIsImtpZCI6IjkwOTg1NzhjNDg4MWRjMDVlYmYxOWExNWJhMjJkOGZkMWFiMzRjOGEiLCJ0eXAiOiJKV1QifQ.eyJyb2xlIjoiU3VwZXJBZG1pbiIsImluc3RpdHV0aW9uSWQiOiJpbnN0XzAwMiIsImlzcyI6Imh0dHBzOi8vc2VjdXJldG9rZW4uZ29vZ2xlLmNvbS9lZHUtdHJhY2stcHJvamVjdCIsImF1ZCI6ImVkdS10cmFjay1wcm9qZWN0IiwiYXV0aF90aW1lIjoxNzQ1MDE3NzU2LCJ1c2VyX2lkIjoiaUpVbm13YUxFN09jMWNXWVp0VTJNVjBJUDNDMiIsInN1YiI6ImlKVW5td2FMRTdPYzFjV1ladFUyTVYwSVAzQzIiLCJpYXQiOjE3NDUwMTc3NTYsImV4cCI6MTc0NTAyMTM1NiwiZW1haWwiOiJzdXBlcmFkbWludXNlckBleGFtcGxlLmNvbSIsImVtYWlsX3ZlcmlmaWVkIjpmYWxzZSwiZmlyZWJhc2UiOnsiaWRlbnRpdGllcyI6eyJlbWFpbCI6WyJzdXBlcmFkbWludXNlckBleGFtcGxlLmNvbSJdfSwic2lnbl9pbl9wcm92aWRlciI6InBhc3N3b3JkIn19.lO4zKYT6NAfSHwobuzfoBXwGCkmJ-OdT9EQUNXuMBpoYGnmUpNmvyrAXjXVrs_xkbuOpqVgH2IS1Nz4kZ0oWVUA7fqzNtcMSLxSuED05PRUIspWVELbeZZqhZd6fiwZBbdgAwcu60gq-GvGOwrMSZLPNSUeVdA6rBCW1T3toEzOxoc7_GcnrJswV5dIOXSSepgs8ZzUW2HMyZ6Z0WEclmLXVaP5RgGLRxFuRRmW3m-BAwh_rVdwiq8m-DRCuvLdJf3uR75wmaEeQV41yshOgVrICWoUG7ASEmhaKCVro0Rqb6B8trc5-1JM3Ry71-iFOvoc6JrMfRU5Gpq-0gVk0PA",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3000/analytics/courses/CDIdVvJdrhEcVQD1l668",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"analytics",
+								"courses",
+								"CDIdVvJdrhEcVQD1l668"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Exports institution-wide metrics as a CSV file",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJSUzI1NiIsImtpZCI6IjkwOTg1NzhjNDg4MWRjMDVlYmYxOWExNWJhMjJkOGZkMWFiMzRjOGEiLCJ0eXAiOiJKV1QifQ.eyJyb2xlIjoiU3VwZXJBZG1pbiIsImluc3RpdHV0aW9uSWQiOiJpbnN0XzAwMiIsImlzcyI6Imh0dHBzOi8vc2VjdXJldG9rZW4uZ29vZ2xlLmNvbS9lZHUtdHJhY2stcHJvamVjdCIsImF1ZCI6ImVkdS10cmFjay1wcm9qZWN0IiwiYXV0aF90aW1lIjoxNzQ1MDE3NzU2LCJ1c2VyX2lkIjoiaUpVbm13YUxFN09jMWNXWVp0VTJNVjBJUDNDMiIsInN1YiI6ImlKVW5td2FMRTdPYzFjV1ladFUyTVYwSVAzQzIiLCJpYXQiOjE3NDUwMTc3NTYsImV4cCI6MTc0NTAyMTM1NiwiZW1haWwiOiJzdXBlcmFkbWludXNlckBleGFtcGxlLmNvbSIsImVtYWlsX3ZlcmlmaWVkIjpmYWxzZSwiZmlyZWJhc2UiOnsiaWRlbnRpdGllcyI6eyJlbWFpbCI6WyJzdXBlcmFkbWludXNlckBleGFtcGxlLmNvbSJdfSwic2lnbl9pbl9wcm92aWRlciI6InBhc3N3b3JkIn19.lO4zKYT6NAfSHwobuzfoBXwGCkmJ-OdT9EQUNXuMBpoYGnmUpNmvyrAXjXVrs_xkbuOpqVgH2IS1Nz4kZ0oWVUA7fqzNtcMSLxSuED05PRUIspWVELbeZZqhZd6fiwZBbdgAwcu60gq-GvGOwrMSZLPNSUeVdA6rBCW1T3toEzOxoc7_GcnrJswV5dIOXSSepgs8ZzUW2HMyZ6Z0WEclmLXVaP5RgGLRxFuRRmW3m-BAwh_rVdwiq8m-DRCuvLdJf3uR75wmaEeQV41yshOgVrICWoUG7ASEmhaKCVro0Rqb6B8trc5-1JM3Ry71-iFOvoc6JrMfRU5Gpq-0gVk0PA",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3000/analytics/institution/export",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"analytics",
+								"institution",
+								"export"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Exports teacher performance metrics as CSV",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJSUzI1NiIsImtpZCI6IjkwOTg1NzhjNDg4MWRjMDVlYmYxOWExNWJhMjJkOGZkMWFiMzRjOGEiLCJ0eXAiOiJKV1QifQ.eyJyb2xlIjoiU3VwZXJBZG1pbiIsImluc3RpdHV0aW9uSWQiOiJpbnN0XzAwMiIsImlzcyI6Imh0dHBzOi8vc2VjdXJldG9rZW4uZ29vZ2xlLmNvbS9lZHUtdHJhY2stcHJvamVjdCIsImF1ZCI6ImVkdS10cmFjay1wcm9qZWN0IiwiYXV0aF90aW1lIjoxNzQ1MDE3NzU2LCJ1c2VyX2lkIjoiaUpVbm13YUxFN09jMWNXWVp0VTJNVjBJUDNDMiIsInN1YiI6ImlKVW5td2FMRTdPYzFjV1ladFUyTVYwSVAzQzIiLCJpYXQiOjE3NDUwMTc3NTYsImV4cCI6MTc0NTAyMTM1NiwiZW1haWwiOiJzdXBlcmFkbWludXNlckBleGFtcGxlLmNvbSIsImVtYWlsX3ZlcmlmaWVkIjpmYWxzZSwiZmlyZWJhc2UiOnsiaWRlbnRpdGllcyI6eyJlbWFpbCI6WyJzdXBlcmFkbWludXNlckBleGFtcGxlLmNvbSJdfSwic2lnbl9pbl9wcm92aWRlciI6InBhc3N3b3JkIn19.lO4zKYT6NAfSHwobuzfoBXwGCkmJ-OdT9EQUNXuMBpoYGnmUpNmvyrAXjXVrs_xkbuOpqVgH2IS1Nz4kZ0oWVUA7fqzNtcMSLxSuED05PRUIspWVELbeZZqhZd6fiwZBbdgAwcu60gq-GvGOwrMSZLPNSUeVdA6rBCW1T3toEzOxoc7_GcnrJswV5dIOXSSepgs8ZzUW2HMyZ6Z0WEclmLXVaP5RgGLRxFuRRmW3m-BAwh_rVdwiq8m-DRCuvLdJf3uR75wmaEeQV41yshOgVrICWoUG7ASEmhaKCVro0Rqb6B8trc5-1JM3Ry71-iFOvoc6JrMfRU5Gpq-0gVk0PA",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3000/analytics/teachers/export",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"analytics",
+								"teachers",
+								"export"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Export all teacher analytics as a PDF",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJSUzI1NiIsImtpZCI6IjkwOTg1NzhjNDg4MWRjMDVlYmYxOWExNWJhMjJkOGZkMWFiMzRjOGEiLCJ0eXAiOiJKV1QifQ.eyJyb2xlIjoiU3VwZXJBZG1pbiIsImluc3RpdHV0aW9uSWQiOiJpbnN0XzAwMiIsImlzcyI6Imh0dHBzOi8vc2VjdXJldG9rZW4uZ29vZ2xlLmNvbS9lZHUtdHJhY2stcHJvamVjdCIsImF1ZCI6ImVkdS10cmFjay1wcm9qZWN0IiwiYXV0aF90aW1lIjoxNzQ1MDE3NzU2LCJ1c2VyX2lkIjoiaUpVbm13YUxFN09jMWNXWVp0VTJNVjBJUDNDMiIsInN1YiI6ImlKVW5td2FMRTdPYzFjV1ladFUyTVYwSVAzQzIiLCJpYXQiOjE3NDUwMTc3NTYsImV4cCI6MTc0NTAyMTM1NiwiZW1haWwiOiJzdXBlcmFkbWludXNlckBleGFtcGxlLmNvbSIsImVtYWlsX3ZlcmlmaWVkIjpmYWxzZSwiZmlyZWJhc2UiOnsiaWRlbnRpdGllcyI6eyJlbWFpbCI6WyJzdXBlcmFkbWludXNlckBleGFtcGxlLmNvbSJdfSwic2lnbl9pbl9wcm92aWRlciI6InBhc3N3b3JkIn19.lO4zKYT6NAfSHwobuzfoBXwGCkmJ-OdT9EQUNXuMBpoYGnmUpNmvyrAXjXVrs_xkbuOpqVgH2IS1Nz4kZ0oWVUA7fqzNtcMSLxSuED05PRUIspWVELbeZZqhZd6fiwZBbdgAwcu60gq-GvGOwrMSZLPNSUeVdA6rBCW1T3toEzOxoc7_GcnrJswV5dIOXSSepgs8ZzUW2HMyZ6Z0WEclmLXVaP5RgGLRxFuRRmW3m-BAwh_rVdwiq8m-DRCuvLdJf3uR75wmaEeQV41yshOgVrICWoUG7ASEmhaKCVro0Rqb6B8trc5-1JM3Ry71-iFOvoc6JrMfRU5Gpq-0gVk0PA",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3000/analytics/teachers/export/pdf",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"analytics",
+								"teachers",
+								"export",
+								"pdf"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Triggers download like institution-analytics.pdf",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJSUzI1NiIsImtpZCI6IjkwOTg1NzhjNDg4MWRjMDVlYmYxOWExNWJhMjJkOGZkMWFiMzRjOGEiLCJ0eXAiOiJKV1QifQ.eyJyb2xlIjoiU3VwZXJBZG1pbiIsImluc3RpdHV0aW9uSWQiOiJpbnN0XzAwMiIsImlzcyI6Imh0dHBzOi8vc2VjdXJldG9rZW4uZ29vZ2xlLmNvbS9lZHUtdHJhY2stcHJvamVjdCIsImF1ZCI6ImVkdS10cmFjay1wcm9qZWN0IiwiYXV0aF90aW1lIjoxNzQ1MDE3NzU2LCJ1c2VyX2lkIjoiaUpVbm13YUxFN09jMWNXWVp0VTJNVjBJUDNDMiIsInN1YiI6ImlKVW5td2FMRTdPYzFjV1ladFUyTVYwSVAzQzIiLCJpYXQiOjE3NDUwMTc3NTYsImV4cCI6MTc0NTAyMTM1NiwiZW1haWwiOiJzdXBlcmFkbWludXNlckBleGFtcGxlLmNvbSIsImVtYWlsX3ZlcmlmaWVkIjpmYWxzZSwiZmlyZWJhc2UiOnsiaWRlbnRpdGllcyI6eyJlbWFpbCI6WyJzdXBlcmFkbWludXNlckBleGFtcGxlLmNvbSJdfSwic2lnbl9pbl9wcm92aWRlciI6InBhc3N3b3JkIn19.lO4zKYT6NAfSHwobuzfoBXwGCkmJ-OdT9EQUNXuMBpoYGnmUpNmvyrAXjXVrs_xkbuOpqVgH2IS1Nz4kZ0oWVUA7fqzNtcMSLxSuED05PRUIspWVELbeZZqhZd6fiwZBbdgAwcu60gq-GvGOwrMSZLPNSUeVdA6rBCW1T3toEzOxoc7_GcnrJswV5dIOXSSepgs8ZzUW2HMyZ6Z0WEclmLXVaP5RgGLRxFuRRmW3m-BAwh_rVdwiq8m-DRCuvLdJf3uR75wmaEeQV41yshOgVrICWoUG7ASEmhaKCVro0Rqb6B8trc5-1JM3Ry71-iFOvoc6JrMfRU5Gpq-0gVk0PA",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3000/analytics/institution/export/pdf",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"analytics",
+								"institution",
+								"export",
+								"pdf"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
