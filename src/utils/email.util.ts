@@ -1,4 +1,3 @@
-
 import nodemailer from 'nodemailer';
 
 interface EmailOptions {
@@ -7,17 +6,15 @@ interface EmailOptions {
   html: string;
 }
 
-// Configure the transporter using Gmail SMTP
-const transporter = nodemailer.createTransport({
-  service: 'gmail',
-  auth: {
-    user: process.env.GMAIL_USER,     
-    pass: process.env.GMAIL_PASS,     
-  },
-});
-
-// Send email
 export const sendEmail = async ({ to, subject, html }: EmailOptions): Promise<void> => {
+  const transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+      user: process.env.GMAIL_USER,
+      pass: process.env.GMAIL_PASS,
+    },
+  });
+
   const mailOptions = {
     from: `"EduTrack" <${process.env.GMAIL_USER}>`,
     to,
