@@ -8,6 +8,7 @@
     "build": "tsc",
     "lint": "eslint 'src/**/*.{js,ts}'",
     "test": "jest",
+    "test:coverage": "jest --coverage",
     "test:integration": "jest test/integration",
     "generate-docs": "ts-node scripts/generate-openapi.ts && npx @redocly/cli build-docs openapi.json --output api-docs/index.html"
   },
