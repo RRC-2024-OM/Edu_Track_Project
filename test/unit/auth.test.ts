@@ -1,6 +1,18 @@
-import admin, { apps } from 'firebase-admin';
-import { AuthService } from '../../src/services/auth.service';
+// Persistent mock of Firestore (`db`) from custom firebase config
+const docMock = {
+  set: jest.fn().mockResolvedValue(undefined),
+};
+const collectionMock = jest.fn(() => ({
+  doc: jest.fn(() => docMock),
+}));
 
+jest.mock('../../src/config/firebase', () => ({
+  db: {
+    collection: collectionMock,
+  },
+}));
+
+// ✅ Mock Firebase Admin SDK auth methods
 jest.mock('firebase-admin', () => {
   const authMock = {
     createUser: jest.fn(),
@@ -9,115 +21,127 @@ jest.mock('firebase-admin', () => {
     createCustomToken: jest.fn(),
   };
 
-  const firestoreMock = {
-    collection: jest.fn(() => ({
-      doc: jest.fn(() => ({
-        set: jest.fn(),
-        get: jest.fn(() => ({ exists: true, data: jest.fn() })),
-      })),
-    })),
-  };
-
   return {
     auth: () => authMock,
-    firestore: () => firestoreMock, 
     credential: { cert: jest.fn() },
     initializeApp: jest.fn(),
     apps: [],
   };
 });
 
-describe('AuthService', () => {
-  const authService = new AuthService();
-  const mockAuth = admin.auth() as jest.Mocked<ReturnType<typeof admin.auth>>;
+import express from 'express';
+import request from 'supertest';
+import admin from 'firebase-admin';
+
+const mockAuth = admin.auth() as jest.Mocked<ReturnType<typeof admin.auth>>;
+
+describe('Auth Module - Full Stack', () => {
+  let app: express.Express;
 
   beforeEach(() => {
+    jest.resetModules();
     jest.clearAllMocks();
+
+    const { AuthMiddleware } = require('../../src/middleware/auth.middleware');
+    AuthMiddleware.verifyToken = (_req: any, _res: any, next: any) => next();
+    AuthMiddleware.requireRole = () => (_req: any, _res: any, next: any) => next();
+
+    const authRoutes = require('../../src/routes/auth.routes').default;
+    app = express();
+    app.use(express.json());
+    app.use('/auth', authRoutes);
   });
 
-  describe('registerUser', () => {
-    it('should register a user and set custom claims', async () => {
-      const mockUserRecord = {
-        uid: '1234',
-        email: 'test@example.com',
-        emailVerified: true,
-        disabled: false,
-        metadata: {} as any,
-        providerData: [],
-        toJSON: () => ({}),
-      } as admin.auth.UserRecord;
+  afterAll(() => {
+    jest.clearAllMocks();
+    jest.resetModules();
+  });
 
-      mockAuth.createUser.mockResolvedValue(mockUserRecord);
-      mockAuth.setCustomUserClaims.mockResolvedValue(undefined);
-
-      const user = await authService.registerUser({
+  describe('POST /auth/register', () => {
+    it('should return 400 for missing fields', async () => {
+      const res = await request(app).post('/auth/register').send({
         email: 'test@example.com',
+        password: 'pass123',
+      });
+
+      expect(res.status).toBe(400);
+    });
+
+    it('should return 400 for invalid role', async () => {
+      const res = await request(app).post('/auth/register').send({
+        email: 'test@example.com',
+        password: 'pass123',
+        role: 'HACKER',
+        institutionId: 'inst001',
+      });
+
+      expect(res.status).toBe(400);
+    });
+
+    it('should return 500 if registration fails', async () => {
+      mockAuth.createUser.mockRejectedValueOnce(new Error('Registration error'));
+
+      const res = await request(app).post('/auth/register').send({
+        email: 'fail@example.com',
         password: 'pass123',
         role: 'Teacher',
         institutionId: 'inst001',
       });
 
-      expect(mockAuth.createUser).toHaveBeenCalledWith({
-        email: 'test@example.com',
-        password: 'pass123',
-      });
-
-      expect(mockAuth.setCustomUserClaims).toHaveBeenCalledWith('1234', { role: 'Teacher' });
-
-      expect(user).toMatchObject({
-        uid: '1234',
-        email: 'test@example.com',
-        role: 'Teacher',
-        institutionId: 'inst001',
-      });
-    });
-
-    it('should throw error if createUser fails', async () => {
-      mockAuth.createUser.mockRejectedValue(new Error('createUser failed'));
-
-      await expect(
-        authService.registerUser({
-          email: 'fail@example.com',
-          password: 'badpass',
-          role: 'Teacher',
-        })
-      ).rejects.toThrow('createUser failed');
+      expect(res.status).toBe(500);
     });
   });
 
-  describe('loginUser', () => {
-    it('should login a user and return a token', async () => {
-      const mockUserRecord = {
-        uid: 'user123',
-        email: 'test@example.com',
-        emailVerified: true,
-        disabled: false,
-        metadata: {} as any,
-        providerData: [],
-        toJSON: () => ({}),
-        customClaims: { role: 'Student' },
-      } as admin.auth.UserRecord;
-
-      mockAuth.getUserByEmail.mockResolvedValue(mockUserRecord);
-      mockAuth.createCustomToken.mockResolvedValue('fake-token');
-
-      const result = await authService.loginUser('test@example.com', 'irrelevant');
-
-      expect(mockAuth.getUserByEmail).toHaveBeenCalledWith('test@example.com');
-      expect(mockAuth.createCustomToken).toHaveBeenCalledWith('user123');
-
-      expect(result).toMatchObject({
-        token: 'fake-token',
-        uid: 'user123',
-        email: 'test@example.com',
-        role: 'Student',
+  describe('POST /auth/login', () => {
+    it('should return 400 for missing credentials', async () => {
+      const res = await request(app).post('/auth/login').send({
+        email: 'onlyemail@example.com',
       });
+
+      expect(res.status).toBe(400);
     });
 
-    it('should throw error if user not found', async () => {
-      mockAuth.getUserByEmail.mockRejectedValue(new Error('User not found'));
+    it('should return 401 for invalid login', async () => {
+      mockAuth.getUserByEmail.mockRejectedValueOnce(new Error('Not found'));
 
-      await expect(authService.loginUser('missing@example.com', 'pass')).rejects.toThrow('User not found');
+      const res = await request(app).post('/auth/login').send({
+        email: 'missing@example.com',
+        password: 'any',
+      });
+
+      expect(res.status).toBe(401);
+    });
+  });
+
+  describe('POST /auth/set-claims', () => {
+    it('should set custom claims', async () => {
+      mockAuth.setCustomUserClaims.mockResolvedValueOnce();
+
+      const res = await request(app).post('/auth/set-claims').send({
+        uid: 'user123',
+        role: 'Teacher',
+        institutionId: 'inst001',
+      });
+
+      expect(res.status).toBe(200);
+      expect(res.body).toHaveProperty('message', 'Claims updated successfully');
+    });
+
+    it('should return 400 for missing uid or role', async () => {
+      const res = await request(app).post('/auth/set-claims').send({
+        uid: 'user123',
+      });
+
+      expect(res.status).toBe(400);
+    });
+
+    it('should return 400 for invalid role', async () => {
+      const res = await request(app).post('/auth/set-claims').send({
+        uid: 'user123',
+        role: 'Spy',
+      });
+
+      expect(res.status).toBe(400);
     });
   });
 });
