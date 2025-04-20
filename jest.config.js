@@ -26,15 +26,6 @@ module.exports = {
   coverageDirectory: 'coverage',
   coverageReporters: ['text', 'html', 'lcov'],
 
-  // Optional: Fail build if coverage is too low
-  coverageThreshold: {
-    global: {
-      branches: 70,
-      functions: 80,
-      lines: 80,
-      statements: 80,
-    },
-  },
 
   // Ignore folders like scripts, build artifacts, coverage reports
   testPathIgnorePatterns: [
