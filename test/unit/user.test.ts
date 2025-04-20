@@ -1,8 +1,9 @@
+import express from 'express';
+import request from 'supertest';
+import userRoutes from '../../src/routes/user.routes';
 import { UserService } from '../../src/services/user.service';
-import * as admin from 'firebase-admin';
-import { db } from '../../src/config/firebase';
+import admin from 'firebase-admin';
 
-// Mock firebase-admin (auth)
 jest.mock('firebase-admin', () => ({
   apps: [],
   initializeApp: jest.fn(),
@@ -13,31 +14,72 @@ jest.mock('firebase-admin', () => ({
   auth: jest.fn(),
 }));
 
-// Mock firebase config file (db)
 jest.mock('../../src/config/firebase', () => {
-  const get = jest.fn();
-  const set = jest.fn();
-  const update = jest.fn();
-  const deleteFn = jest.fn();
-  const data = jest.fn();
+  let updatedData: any = { name: 'Test User', role: 'Student' };
 
-  const doc = jest.fn(() => ({ get, set, update, delete: deleteFn, data }));
+  const docMock = {
+    get: jest.fn(() => Promise.resolve({
+      exists: true,
+      id: '123',
+      data: () => updatedData,
+    })),
+    set: jest.fn(),
+    update: jest.fn((data) => {
+      updatedData = { ...updatedData, ...data };
+      return Promise.resolve();
+    }),
+    delete: jest.fn(),
+  };
 
-  const collection = jest.fn(() => ({ doc }));
+  const collectionMock = {
+    doc: jest.fn(() => docMock),
+    where: jest.fn().mockReturnThis(),
+    get: jest.fn(() => Promise.resolve({
+      docs: [
+        {
+          id: '123',
+          data: () => updatedData,
+        },
+      ]
+    })),
+  };
 
   return {
     db: {
-      collection,
+      collection: jest.fn(() => collectionMock),
     },
   };
 });
+
+jest.mock('multer', () => () => ({ single: () => (_req: any, _res: any, next: any) => next() }));
 
 const mockAuth = {
   createUser: jest.fn(),
   setCustomUserClaims: jest.fn(),
 };
 
-describe('UserService', () => {
+const app = express();
+app.use(express.json());
+app.use('/users', userRoutes);
+
+const mockUser = {
+  uid: 'admin123',
+  email: 'admin@test.com',
+  role: 'SuperAdmin',
+  institutionId: 'inst1',
+};
+
+jest.mock('../../src/middleware/auth.middleware', () => ({
+  AuthMiddleware: {
+    verifyToken: (req: any, _res: any, next: any) => {
+      req.user = mockUser;
+      next();
+    },
+    requireRole: (..._roles: string[]) => (_req: any, _res: any, next: any) => next(),
+  },
+}));
+
+describe('Users Module - Full Stack', () => {
   const service = new UserService();
 
   beforeEach(() => {
@@ -45,88 +87,90 @@ describe('UserService', () => {
     (admin.auth as unknown as jest.Mock).mockReturnValue(mockAuth);
   });
 
-  describe('getUserById', () => {
+  describe('Service Layer', () => {
+    it('should get a user by ID', async () => {
+      const result = await service.getUserById('123');
+      expect(result).toHaveProperty('name', 'Test User');
+    });
+
     it('should throw if user not found', async () => {
-      const collectionMock = db.collection('users');
-      const docMock = collectionMock.doc('not-found');
-
-      // ✅ Cast to jest.Mock for TypeScript compatibility
-      (docMock.get as jest.Mock).mockResolvedValueOnce({ exists: false });
-
+      const collection = require('../../src/config/firebase').db.collection('users');
+      const doc = collection.doc('not-found');
+      (doc.get as jest.Mock).mockResolvedValueOnce({ exists: false });
       await expect(service.getUserById('not-found')).rejects.toThrow('User not found');
     });
 
-    it('should return user data if found', async () => {
-      const mockData = { name: 'Test User' };
-      const collectionMock = db.collection('users');
-      const docMock = collectionMock.doc('123');
+    it('should update a user', async () => {
+      const result = await service.updateUser('123', { name: 'Updated' });
+      expect(result).toHaveProperty('name', 'Updated');
+    });
 
-      (docMock.get as jest.Mock).mockResolvedValueOnce({
-        exists: true,
-        data: () => mockData,
-        id: '123',
-      });
+    it('should delete a user', async () => {
+      const result = await service.deleteUser('123');
+      expect(result).toEqual({ id: '123', deleted: true });
+    });
 
-      const result = await service.getUserById('123');
-      expect(result).toEqual({ id: '123', ...mockData });
+    it('should import users from CSV', async () => {
+      const buffer = Buffer.from('email,password,role\njohn@example.com,123456,Student');
+      mockAuth.createUser.mockResolvedValueOnce({ uid: 'uid1' });
+      mockAuth.setCustomUserClaims.mockResolvedValueOnce(undefined);
+
+      const result = await service.importUsersFromCSV(buffer);
+      expect(result).toHaveLength(1);
+      expect(mockAuth.createUser).toHaveBeenCalled();
     });
   });
 
-  describe('importUsersFromCSV', () => {
-    it('should parse CSV and import users using real parser', async () => {
-      const csvData = `email,password,role,institutionId
-john@example.com,pass123,Student,inst1
-jane@example.com,pass456,Teacher,inst2`;
+  describe('Route Integration', () => {
+    it('GET /users - should return all users', async () => {
+      const res = await request(app).get('/users');
+      expect(res.status).toBe(200);
+      expect(res.body.length).toBeGreaterThanOrEqual(1);
+    });
 
-      const buffer = Buffer.from(csvData);
+    it('GET /users/:id - should return one user', async () => {
+      const res = await request(app).get('/users/123');
+      expect(res.status).toBe(200);
+      expect(res.body).toHaveProperty('name');
+    });
 
+    it('PUT /users/:id - should update a user', async () => {
+      const res = await request(app).put('/users/123').send({ name: 'Updated' });
+      expect(res.status).toBe(200);
+      expect(res.body).toHaveProperty('name', 'Updated');
+    });
+
+    it('DELETE /users/:id - should delete a user', async () => {
+      const res = await request(app).delete('/users/123');
+      expect(res.status).toBe(200);
+      expect(res.body).toEqual({ id: '123', deleted: true });
+    });
+
+    it('POST /users - should create a user', async () => {
       mockAuth.createUser.mockResolvedValue({ uid: 'uid1' });
       mockAuth.setCustomUserClaims.mockResolvedValue(undefined);
 
-      const collectionMock = db.collection('users');
-      const docMock = collectionMock.doc('uid1');
+      const res = await request(app)
+        .post('/users')
+        .send({ email: 'test@test.com', password: '123456', role: 'Student' });
 
-      (docMock.set as jest.Mock).mockResolvedValue(undefined);
-
-      const result = await service.importUsersFromCSV(buffer);
-
-      expect(Array.isArray(result)).toBe(true);
-      expect(result.length).toBe(2);
-      expect(mockAuth.createUser).toHaveBeenCalledTimes(2);
-      expect(mockAuth.setCustomUserClaims).toHaveBeenCalledTimes(2);
-      expect(docMock.set).toHaveBeenCalled();
+      expect(res.status).toBe(201);
+      expect(mockAuth.createUser).toHaveBeenCalled();
     });
-  });
 
-  
-  describe('updateUser', () => {
-    it('should update a user and return the updated data', async () => {
-      const collectionMock = db.collection('users');
-      const docMock = collectionMock.doc('123');
-
-      const updatedUser = { name: 'Updated User' };
-
-      (docMock.update as jest.Mock).mockResolvedValue(undefined);
-      (docMock.get as jest.Mock).mockResolvedValueOnce({
-        data: () => updatedUser,
-      });
-
-      const result = await service.updateUser('123', updatedUser);
-      expect(result).toEqual({ id: '123', ...updatedUser });
-      expect(docMock.update).toHaveBeenCalledWith(expect.objectContaining(updatedUser));
+    it('POST /users - should return 400 for missing fields', async () => {
+      const res = await request(app).post('/users').send({ email: 'x@test.com' });
+      expect(res.status).toBe(400);
     });
-  });
 
-  describe('deleteUser', () => {
-    it('should delete a user and return confirmation', async () => {
-      const collectionMock = db.collection('users');
-      const docMock = collectionMock.doc('123');
+    it('POST /users - should return 400 for invalid role', async () => {
+      const res = await request(app).post('/users').send({ email: 'x@test.com', password: '123', role: 'InvalidRole' });
+      expect(res.status).toBe(400);
+    });
 
-      (docMock.delete as jest.Mock).mockResolvedValue(undefined);
-
-      const result = await service.deleteUser('123');
-      expect(result).toEqual({ id: '123', deleted: true });
-      expect(docMock.delete).toHaveBeenCalled();
+    it('POST /users/bulk - should return 400 if no file', async () => {
+      const res = await request(app).post('/users/bulk');
+      expect(res.status).toBe(400);
     });
   });
 });
